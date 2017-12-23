@@ -2,7 +2,7 @@
 CLAF_hookAutoNameID = 1
 
 --Throws an error if the passed argument is nil.
-function errorIfNil(any)
+function ErrorIfNil(any)
     if any == nil then
         error(any .. " shouldn't be nil")
 end
