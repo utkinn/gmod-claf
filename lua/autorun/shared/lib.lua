@@ -1,5 +1,10 @@
 --Free ID for automatic hook name
-CLAF_hookAutoNameID = 1
+local CLAF_hookAutoNameID = 1
+
+-- Always creates an error 'not implemented'.
+function TODO()
+    error('not implemented')
+end
 
 --Throws an error if the passed argument is nil.
 function ErrorIfNil(any)
