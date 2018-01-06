@@ -22,3 +22,15 @@ function Hook(event, callback, ID)
 
     hook.Add(event, ID, callback)
 end
+
+-- Sends a quick net message to the opposite side.
+function Signal(networkString, receiver)
+    if SERVER then
+        ErrorIfNil(receiver)
+        net.Start(networkString)
+        net.Send(receiver)
+    else    -- Clientside
+        net.Start(networkString)
+        net.SendToServer()
+    end
+end
