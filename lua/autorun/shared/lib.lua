@@ -1,3 +1,5 @@
+-- Some utility functions.
+
 --Free ID for automatic hook name
 local CLAF_hookAutoNameID = 1
 
