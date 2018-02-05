@@ -74,3 +74,13 @@ function QuickNetMessage(networkString, receiver, ...)
         net.SendToServer()
     end
 end
+
+-- Returns true if x is even, false otherwise.
+function IsEven(x)
+    return x % 2 == 0
+end
+
+-- Returns true if x is odd, false otherwise.
+function IsOdd(x)
+    return x % 2 != 0
+end
