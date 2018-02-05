@@ -5,3 +5,4 @@
 include 'aliases.lua'
 include 'enums.lua'
 include 'lib.lua'
+include 'functional.lua'
