@@ -2,7 +2,8 @@
 --     include 'claf.lua'
 -- to the beginning of the file.
 
-include 'shared/aliases.lua'
-include 'shared/enums.lua'
-include 'shared/lib.lua'
-include 'shared/functional.lua'
+include 'claf/aliases.lua'
+include 'claf/enums.lua'
+include 'claf/lib.lua'
+include 'claf/functional.lua'
+include 'claf/unit_testing.lua'

@@ -1,20 +1,20 @@
 --Creates an enum.
-function Enum(constantNames)
+function Enum(...)
     local enum = {}
 
-    for constantValue = 1, #constantNames do
-        enum[constantNames[constantValue]] = constantValue
+    for constantValue = 1, #... do
+        enum[...[constantValue]] = constantValue
     end
 
     return enum
 end
 
 --Creates a flag set.
-function Flags(flagsNames)
+function Flags(...)
     local flagSet = {}
     local currentFlagValue = 1
 
-    for _, flagName in pairs(flagsNames) do
+    for _, flagName in pairs(...) do
         flagSet[flagName] = currentFlagValue
         currentFlagValue = currentFlagValue * 2
     end
