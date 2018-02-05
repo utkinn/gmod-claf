@@ -9,11 +9,13 @@ See [wiki](https://github.com/javabird25/gmod-claf/wiki) for the documentation.
 CLAF will be helpful for beginners. It makes some standard Garry's Mod library tools easier to use.  
 Also, there is some mess in some places of standard library. CLAF provides an alternative approach.
 
-<!--
-## How to use?
+<!-- ## How to use?
 ### Development phase
 Subscribe to CLAF addon in Steam Workshop.
+In source files where you use CLAF, add the following line to the beginning:
+```lua
+include 'claf'
+```
 
 ### Deploy phase
-Add dependency of CLAF Steam Workshop addon.
--->
+Add dependency of CLAF Steam Workshop addon on your addon. -->

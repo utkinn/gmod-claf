@@ -4,8 +4,12 @@
 local CLAF_hookAutoNameID = 1
 
 -- Always creates an error 'not implemented'.
-function TODO()
-    error('not implemented')
+function TODO(reason)
+    if reason then
+        error('not implemented: '..reason)
+    else
+        error('not implemented')
+    end
 end
 
 -- Throws an error if the passed argument is nil.
@@ -31,6 +35,42 @@ function Signal(networkString, receiver)
         net.Send(receiver)
     else    -- Clientside
         net.Start(networkString)
+        net.SendToServer()
+    end
+end
+
+local function WriteMessageData(data)
+    for _, v in pairs(data) do
+        WriteMessageDataPiece(v)
+    end
+end
+
+net.Write = function(piece)
+    ErrorIfNil(piece)
+    if isnumber(piece) then
+        TODO()
+    elseif isbool(piece) then
+        net.WriteBool(piece)
+    elseif isstring(piece) then
+        net.WriteString(piece)
+    elseif isentity(piece) then
+        net.WriteEntity(piece)
+    elseif istable(piece) then
+        net.WriteTable(piece)
+    end
+    -- TODO('more types')
+end
+
+function QuickNetMessage(networkString, receiver, ...)
+    if SERVER then
+        ErrorIfNil(receiver)
+    end
+
+    net.Start(networkString)
+        WriteMessageData(arg)
+    if SERVER then
+        net.Send(receiver)
+    else    -- Clientside
         net.SendToServer()
     end
 end
