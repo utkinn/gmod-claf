@@ -41,36 +41,25 @@ end
 
 local function WriteMessageData(data)
     for _, v in pairs(data) do
-        WriteMessageDataPiece(v)
+        net.Write(v)
     end
 end
 
-net.Write = function(piece)
-    ErrorIfNil(piece)
-    if isnumber(piece) then
-        TODO()
-    elseif isbool(piece) then
-        net.WriteBool(piece)
-    elseif isstring(piece) then
-        net.WriteString(piece)
-    elseif isentity(piece) then
-        net.WriteEntity(piece)
-    elseif istable(piece) then
-        net.WriteTable(piece)
-    end
-    -- TODO('more types')
-end
+net.Write = net.WriteType(x)
+net.Read = net.ReadType()
 
-function QuickNetMessage(networkString, receiver, ...)
-    if SERVER then
+if SERVER then
+    function QuickNetMessage(networkString, receiver, ...)
         ErrorIfNil(receiver)
-    end
 
-    net.Start(networkString)
+        net.Start(networkString)
         WriteMessageData(arg)
-    if SERVER then
         net.Send(receiver)
-    else    -- Clientside
+    end
+else
+    function QuickNetMessage(networkString, ...)
+        net.Start(networkString)
+        WriteMessageData(arg)
         net.SendToServer()
     end
 end
