@@ -19,3 +19,8 @@ end
 function playerMetaTable:GetArmor()
     return self:Armor()
 end
+
+-- Runs a piece of Lua code.
+function Run(code)
+    RunString(code)
+end
