@@ -14,7 +14,7 @@ Also, there is some mess in some places of standard library. CLAF provides an al
 Subscribe to CLAF addon in Steam Workshop.
 In source files where you use CLAF, add the following line to the beginning:
 ```lua
-include 'claf'
+include 'claf.lua'
 ```
 
 ### Deploy phase
