@@ -45,8 +45,8 @@ local function WriteMessageData(data)
     end
 end
 
-net.Write = net.WriteType(x)
-net.Read = net.ReadType()
+net.Write = net.WriteType
+net.Read = net.ReadType
 
 if SERVER then
     function net.QuickMsg(networkString, receiver, ...)

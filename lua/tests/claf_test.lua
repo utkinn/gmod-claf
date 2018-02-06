@@ -2,8 +2,6 @@ include 'claf.lua'
 
 -- Unit tests.
 
-if not GetConVar('developer'):GetBool() then return end
-
 local tests = {
     --- Self-test ---
 
@@ -22,15 +20,15 @@ local tests = {
     end,
     -- Alias "IsAlive"
     function()
-        local alive = Player(1):Alive()
-        local isAlive = Player(1):IsAlive()
+        local alive = player.GetAll()[1]:Alive()
+        local isAlive = player.GetAll()[1]:IsAlive()
 
         assert(alive == isAlive)
     end,
     -- Alias "GetArmor"
     function()
-        local armor = Player(1):Armor()
-        local getArmor = Player(1):GetArmor()
+        local armor = player.GetAll()[1]:Armor()
+        local getArmor = player.GetAll()[1]:GetArmor()
 
         assert(armor == getArmor)
     end,
@@ -350,8 +348,8 @@ local tests = {
     end
 }
 
-Hook('Initialized', function()
-    for _, test in pairs(tests) do
-        test()
-    end
-end)
+print 'CLAF Tests table initialized'
+
+for _, test in pairs(tests) do
+    test()
+end
