@@ -91,3 +91,8 @@ function Zip(...)
     return zip
 end
 
+function Try(try, catch, finally)
+    local noErrors = pcall(try)
+    if catch ~= nil and not noErrors then catch() end
+    if finally ~= nil then finally() end
+end
