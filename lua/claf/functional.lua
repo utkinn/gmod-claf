@@ -57,6 +57,10 @@ function Any(table, predicate)
     return false
 end
 
+function None(table, predicate)
+    return not All(table, predicate)
+end
+
 -- Returns true if all values in the table matches the given predicate.
 function All(table, predicate)
     if predicate == nil then

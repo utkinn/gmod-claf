@@ -189,6 +189,30 @@ local tests = {
 
         assertNot(shouldBeFalse)
     end,
+    -- None
+    function()
+        local numbers = {2, 20, 100, 1}
+
+        allIsOdd = None(numbers, function(x) return IsOdd(x) end)
+
+        assertNot(allIsOdd)
+    end,
+    -- None without predicate
+    function()
+        local numbers = {true, false}
+
+        all = None(numbers)
+
+        assertNot(all)
+    end,
+    -- Applying None to empty table
+    function()
+        local empty = {}
+
+        local shouldBeFalse = None(empty)
+
+        assertNot(shouldBeFalse)
+    end,
 
     --- Zip ---
 
