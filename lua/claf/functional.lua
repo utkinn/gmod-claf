@@ -92,8 +92,8 @@ function Zip(...)   -- TODO: Support for different lenghts
 end
 
 function Try(try, catch, finally)
-    local noErrors = pcall(try)
-    if catch ~= nil and not noErrors then catch() end
+    local noErrors, message = pcall(try)
+    if catch ~= nil and not noErrors then catch(message) end
     if finally ~= nil then finally() end
 end
 
