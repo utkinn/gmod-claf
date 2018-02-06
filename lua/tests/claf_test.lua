@@ -11,29 +11,33 @@ local tests = {
 
     --- Alias tests ---
 
-    -- Alias "GetHealth"
     function()
+        print 'Alias "GetHealth"...'
+
         local health = Entity(1):Health()
         local getHealth = Entity(1):GetHealth()
 
         assert(health == getHealth)
     end,
-    -- Alias "IsAlive"
     function()
+        print 'Alias "IsAlive"...'
+
         local alive = player.GetAll()[1]:Alive()
         local isAlive = player.GetAll()[1]:IsAlive()
 
         assert(alive == isAlive)
     end,
-    -- Alias "GetArmor"
     function()
+        print 'Alias "GetArmor"...'
+
         local armor = player.GetAll()[1]:Armor()
         local getArmor = player.GetAll()[1]:GetArmor()
 
         assert(armor == getArmor)
     end,
-    -- Alias "Run"
     function()
+        print 'Alias "Run"...'
+
         Run 'x_ = 1'
 
         assert(x_ == 1)
@@ -41,34 +45,41 @@ local tests = {
 
     --- Enums and Flags tests ---
 
-    -- Enum structure
     function()
+        print 'Enum structure...'
+
         local color = Enum('RED', 'GREEN', 'BLUE')
 
         assertNotNil(color.RED)
         assertNotNil(color.GREEN)
         assertNotNil(color.BLUE)
     end,
-    -- Flag structure
     function()
+        print 'Flags structure...'
+
         local color = Flags('RED', 'GREEN', 'BLUE')
 
         assertNotNil(color.RED)
         assertNotNil(color.GREEN)
         assertNotNil(color.BLUE)
     end,
-    -- Empty enum
     function()
+        print 'Empty enum...'
+
         local empty = Enum()
+
         assert(#empty == 0)
     end,
-    -- Empty flag set
     function()
+        print 'Empty flags...'
+
         local empty = Flags()
+
         assert(#empty == 0)
     end,
-    -- Incorrect enum constant names
     function()
+        print 'Incorrect enum constant names...'
+
         assertError(Enum('RED.smth'))
         assertError(Enum('4abc'))
         assertError(Enum('!@#$%^&*'))
@@ -79,8 +90,9 @@ local tests = {
         assertError(Enum('__'))
         assertError(Enum('_a'))
     end,
-    -- Incorrect flag constant names
     function()
+        print 'Incorrect flags constant names...'
+
         assertError(Flags('RED.smth'))
         assertError(Flags('4abc'))
         assertError(Flags('!@#$%^&*'))
@@ -91,8 +103,9 @@ local tests = {
         assertError(Flags('__'))
         assertError(Flags('_a'))
     end,
-    -- Flag batching
     function()
+        print 'Flag batching/debatching...'
+
         local color = Flags('RED', 'GREEN', 'BLUE')
 
         local greenAndBlue = bit.bor(color.GREEN, color.BLUE)
@@ -101,12 +114,15 @@ local tests = {
         -- BLUE                 4   100
         -- bit.bor(GREEN, BLUE) 6   110
         assert(greenAndBlue == 6)
+        assert(bit.band(greenAndBlue, color.GREEN) == color.GREEN)
+        assert(bit.band(greenAndBlue, color.BLUE) == color.BLUE)
     end,
 
     --- Functional programming ---
 
-    -- Map
     function()
+        print 'Map()...'
+
         local numbers = {1, 2, 3, 4, 5}
 
         numbers = Map(function(x) return x * 2 end, numbers)
@@ -117,16 +133,18 @@ local tests = {
         assert(numbers[4] == 8)
         assert(numbers[5] == 10)
     end,
-    -- Mapping empty table
     function()
+        print 'Map() with empty table...'
+
         local empty = {}
 
         local emptyToo = Map(function(x) return x * 2 end, empty)
 
         assert(#emptyToo == 0)
     end,
-    -- Filter
     function()
+        print 'Filter()...'
+
         local numbers = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
 
         numbers = Filter(function(x) return IsEven(x) end, numbers)
@@ -137,80 +155,90 @@ local tests = {
         assert(numbers[4] == 8)
         assert(numbers[5] == 10)
     end,
-    -- Filtering empty table
     function()
+        print 'Filter() with empty table...'
+
         local empty = {}
 
         local emptyToo = Filter(function(x) return true end, empty)
 
         assert(#emptyToo == 0)
     end,
-    -- Any
     function()
+        print 'Any()...'
+
         local numbers = {2, 20, 100, 1}
 
         anyIsOdd = Any(numbers, function(x) return IsOdd(x) end)
 
         assert(anyIsOdd)
     end,
-    -- Any without predicate
     function()
+        print 'Any() with default predicate...'
+
         local numbers = {true, false, false, true}
 
         any = Any(numbers)
 
         assert(any)
     end,
-    -- Applying Any to empty table
     function()
+        print 'Any() with empty table...'
+
         local empty = {}
 
         local shouldBeFalse = Any(empty)
 
         assertNot(shouldBeFalse)
     end,
-    -- All
     function()
+        print 'All()...'
+
         local numbers = {2, 20, 100, 1}
 
         allIsOdd = All(numbers, function(x) return IsOdd(x) end)
 
         assertNot(allIsOdd)
     end,
-    -- All without predicate
     function()
+        print 'All() with default predicate...'
+
         local numbers = {true, true}
 
         all = All(numbers)
 
         assert(all)
     end,
-    -- Applying All to empty table
     function()
+        print 'All() with empty table...'
+
         local empty = {}
 
         local shouldBeFalse = All(empty)
 
         assertNot(shouldBeFalse)
     end,
-    -- None
     function()
+        print 'None()...'
+
         local numbers = {2, 20, 100, 1}
 
         allIsOdd = None(numbers, function(x) return IsOdd(x) end)
 
         assertNot(allIsOdd)
     end,
-    -- None without predicate
     function()
+        print 'None() with default predicate...'
+
         local numbers = {true, false}
 
         all = None(numbers)
 
         assertNot(all)
     end,
-    -- Applying None to empty table
     function()
+        print 'None() with empty table...'
+
         local empty = {}
 
         local shouldBeFalse = None(empty)
@@ -220,8 +248,9 @@ local tests = {
 
     --- Zip ---
 
-    -- Same lenghts
     function()
+        print 'Zip() (same source lengths)...'
+
         local a = {1, 2, 3}
         local b = {4, 5, 6}
         local c = {7, 8, 9}
@@ -238,8 +267,9 @@ local tests = {
         assert(zip[3][2] == 6)
         assert(zip[3][3] == 9)
     end,
-    -- Different lenghts
     function()
+        print 'Zip() (different source lengths)...'
+
         local a = {1, 2, 3}
         local b = {4, 5, 6, 7}
         local c = {8, 9, 10, 11, 12}
@@ -261,11 +291,11 @@ local tests = {
         assert(#zip[3] == 3)
     end,
 
-
     --- Try/catch ---
 
-    -- Try + catch
     function()
+        print 'Try with catch...'
+
         local x
         local wrong = function()
             Try(function()
@@ -280,8 +310,9 @@ local tests = {
         assertNoError(wrong)
         assert(x == 2)
     end,
-    -- Try (exception) + finally
     function()
+        print 'Try (error occurs) with finally...'
+
         local x
         local wrong = function()
             Try(function()
@@ -297,8 +328,9 @@ local tests = {
         assertNoError(wrong)
         assert(x == 2)
     end,
-    -- Try (no exception) + finally
     function()
+        print 'Try (error does not occur) with finally...'
+
         local x
         local wrong = function()
             Try(function() end,
@@ -314,24 +346,28 @@ local tests = {
     end,
 
     --- Min and Max ---
-    -- Min
+
     function()
+        print 'Min()...'
+
         local tbl = {2, 5, 34, 73, 1, 6}
 
         local min = Min(tbl)
 
         assert(min == 1)
     end,
-    -- Max
     function()
+        print 'Max()...'
+
         local tbl = {2, 5, 34, 73, 1, 6}
 
         local max = Max(tbl)
 
         assert(max == 73)
     end,
-    -- Min and Max for empty tables
     function()
+        print 'Min(), Max() with empty table...'
+
         local tbl = {}
 
         local min = Min(tbl)
