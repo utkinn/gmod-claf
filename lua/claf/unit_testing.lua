@@ -8,6 +8,10 @@ function assertNotNil(any)
     assert(any ~= nil)
 end
 
+function assertNil(any)
+    assert(any == nil)
+end
+
 function assertNoError(func)
     local noErrors = pcall(func)
     assert(noErrors)

@@ -72,7 +72,7 @@ function All(table, predicate)
     return true
 end
 
-function Zip(...)
+function Zip(...)   -- TODO: Support for different lenghts
     local tables = table.Copy(...)  -- Copying vararg
 
     if #tables == 1 then return tables[1] end
@@ -95,4 +95,17 @@ function Try(try, catch, finally)
     local noErrors = pcall(try)
     if catch ~= nil and not noErrors then catch() end
     if finally ~= nil then finally() end
+end
+
+-- TODO: Keys
+function Max(table)
+    local sorted = table.Copy(table)
+    table.sort(sorted)
+    return sorted[#sorted]
+end
+
+function Min(table)
+    local sorted = table.Copy(table)
+    table.sort(sorted)
+    return sorted[1]
 end
