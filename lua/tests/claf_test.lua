@@ -5,6 +5,12 @@ include 'claf.lua'
 if not GetConVar('developer'):GetBool() then return end
 
 local tests = {
+    --- Self-test ---
+
+    function()
+        print 'Running CLAF tests...'
+    end,
+
     --- Alias tests ---
 
     -- Alias "GetHealth"
@@ -117,7 +123,7 @@ local tests = {
     function()
         local empty = {}
 
-        local emptyToo = Map(function(x) x * 2 end, empty)
+        local emptyToo = Map(function(x) return x * 2 end, empty)
 
         assert(#emptyToo == 0)
     end,
@@ -137,7 +143,7 @@ local tests = {
     function()
         local empty = {}
 
-        local emptyToo = Filter(function(x) true end, empty)
+        local emptyToo = Filter(function(x) return true end, empty)
 
         assert(#emptyToo == 0)
     end,
@@ -265,7 +271,7 @@ local tests = {
         local x
         local wrong = function()
             Try(function()
-                nil.foo = 1
+                __nothing__.foo = 1
             end,
             -- catch
             function()
@@ -281,7 +287,7 @@ local tests = {
         local x
         local wrong = function()
             Try(function()
-                nil.foo = 1
+                __nothing__.foo = 1
             end,
             nil,
             -- finally
@@ -335,9 +341,17 @@ local tests = {
 
         assertNil(min)
         assertNil(max)
+    end,
+
+    --- Tests success ---
+
+    function()
+        print 'CLAF tests successful!'
     end
 }
 
-for _ test in pairs(tests) do
-    test()
-end
+Hook('Initialized', function()
+    for _, test in pairs(tests) do
+        test()
+    end
+end)
