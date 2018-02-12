@@ -13,11 +13,13 @@ function assertNil(any)
 end
 
 function assertNoError(func)
+    if not isfunction(func) then error '"func" must be a function' end
     local noErrors = pcall(func)
     assert(noErrors)
 end
 
 function assertError(func)
+    if not isfunction(func) then error '"func" must be a function' end
     local noErrors = pcall(func)
     assertNot(noErrors)
 end

@@ -49,17 +49,17 @@ net.Write = net.WriteType
 net.Read = net.ReadType
 
 if SERVER then
-    function net.QuickMsg(networkString, receiver, ...)
+    function net.QuickMsg(networkString, receiver, data)
         ErrorIfNil(receiver)
 
         net.Start(networkString)
-        WriteMessageData(arg)
+        WriteMessageData(data)
         net.Send(receiver)
     end
 else
-    function net.QuickMsg(networkString, ...)
+    function net.QuickMsg(networkString, data)
         net.Start(networkString)
-        WriteMessageData(arg)
+        WriteMessageData(data)
         net.SendToServer()
     end
 end

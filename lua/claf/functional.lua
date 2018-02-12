@@ -1,54 +1,41 @@
 -- Means of functional programming.
 
--- Applies "editor" function to all elements of provided tables.
-function Map(editor, ...)
-    local tables = table.Copy(...)  -- Copying vararg
+-- Applies "editor" function to all elements of the provided table.
+function Map(source, editor)
+    local modified = table.Copy(source)
 
     -- Applying editor function to all tables
-    for _, table in pairs(tables) do   -- Iterating through tables
-        for k, v in pairs(table) do -- Iterating through keys and values
-            table[k] = editor(v)
-        end
+    for k, v in pairs(modified) do -- Iterating through keys and values
+        modified[k] = editor(v)
     end
 
-    -- If there is one table, return it.
-    -- Otherwise, return a table of tables.
-    if #tables == 1 then
-        return tables[1]
-    else
-        return tables
-    end
+    return modified
 end
 
 -- Filters the provided tables.
-function Filter(predicate, ...)
-    local tables = table.Copy(...)  -- Copying vararg
-
-    -- Applying editor function to all tables
-    for _, table in pairs(tables) do   -- Iterating through tables
-        for k, v in pairs(table) do -- Iterating through keys and values
-            if not predicate(v) then
-                table[k] = nil  -- Remove the value if the predicate returns false
-            end
-        end
-    end
-
-    -- If there is one table, return it.
-    -- Otherwise, return a table of tables.
-    if #tables == 1 then
-        return tables[1]
-    else
-        return tables
-    end
-end
-
--- Returns true if any value in the table matches the given predicate.
-function Any(table, predicate)
+function Filter(source, predicate)
+    local filtered = {}
     if predicate == nil then
         predicate = function(x) return tobool(x) end
     end
 
-    for _, v in pairs(table) do
+    -- Applying editor function to all tables
+    for _, v in ipairs(source) do -- Iterating through keys and values
+        if predicate(v) then
+            table.insert(filtered, v)
+        end
+    end
+
+    end
+end
+
+-- Returns true if any value in the table matches the given predicate.
+function Any(source, predicate)
+    if predicate == nil then
+        predicate = function(x) return tobool(x) end
+    end
+
+    for _, v in pairs(source) do
         if predicate(v) then
             return true
         end
@@ -57,17 +44,17 @@ function Any(table, predicate)
     return false
 end
 
-function None(table, predicate)
-    return not All(table, predicate)
+function None(source, predicate)
+    return not Any(source, predicate)
 end
 
 -- Returns true if all values in the table matches the given predicate.
-function All(table, predicate)
+function All(source, predicate)
     if predicate == nil then
         predicate = function(x) return tobool(x) end
     end
 
-    for _, v in pairs(table) do
+    for _, v in pairs(source) do
         if not predicate(v) then
             return false
         end
@@ -76,13 +63,13 @@ function All(table, predicate)
     return true
 end
 
-function Count(table, predicate)
+function Count(source, predicate)
     if predicate == nil then
         predicate = function(x) return tobool(x) end
     end
 
     local count = 0
-    for _, v in pairs(table) do
+    for _, v in pairs(source) do
         if predicate(v) then
             count = count + 1
         end
@@ -91,26 +78,25 @@ function Count(table, predicate)
     return count
 end
 
-function One(table, predicate)
-    return Count(table, predicate) == 1
+function One(source, predicate)
+    return Count(source, predicate) == 1
 end
 
-function Few(table, predicate)
-    return Count(table, predicate) > 1
+function Few(source, predicate)
+    return Count(source, predicate) > 1
 end
 
-function Zip(...)   -- TODO: Support for different lenghts
-    local tables = table.Copy(...)  -- Copying vararg
-
+function Zip(tables)   -- TODO: Support for different lenghts
     if #tables == 1 then return tables[1] end
-    if not All(function(x) table.IsSequential(x) end, unpack(tables)) then error 'some tables are not sequential' end
+
+    if not All(tables, function(x) return table.IsSequential(x) end) then error 'some tables are not sequential' end
 
     local zip = {}
 
     for i = 1, #tables[1] do
         local container = {}
-        for _, table in pairs(tables) do
-            table.insert(table[i])
+        for _, tbl in ipairs(tables) do
+            table.insert(container, tbl[i])
         end
         table.insert(zip, container)
     end
@@ -125,14 +111,14 @@ function Try(try, catch, finally)
 end
 
 -- TODO: Keys
-function Max(table)
-    local sorted = table.Copy(table)
+function Max(source)
+    local sorted = table.Copy(source)
     table.sort(sorted)
     return sorted[#sorted]
 end
 
-function Min(table)
-    local sorted = table.Copy(table)
+function Min(source)
+    local sorted = table.Copy(source)
     table.sort(sorted)
     return sorted[1]
 end
