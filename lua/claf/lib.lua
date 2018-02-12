@@ -6,15 +6,15 @@ local CLAF_hookAutoNameID = 1
 -- Always creates an error 'not implemented'.
 function TODO(reason)
     if reason ~= nil then
-        error('not implemented: '..reason)
+        error 'not implemented: '..reason
     else
-        error('not implemented')
+        error 'not implemented'
     end
 end
 
 -- Throws an error if the passed argument is nil.
 function ErrorIfNil(any)
-    if any == nil then error('nil is not allowed here') end
+    if any == nil then error 'nil is not allowed here' end
 end
 
 -- Quick hook creation function.
