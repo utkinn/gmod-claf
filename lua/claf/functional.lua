@@ -26,7 +26,24 @@ function Filter(source, predicate)
         end
     end
 
+    return filtered
+end
+
+-- Filters the provided keyed (non-sequential) tables.
+function FilterKeyed(source, predicate)
+    local filtered = {}
+    if predicate == nil then
+        predicate = function(k, v) return tobool(v) end
     end
+
+    -- Applying editor function to all tables
+    for k, v in pairs(source) do -- Iterating through keys and values
+        if predicate(k, v) then
+            filtered[k] = v
+        end
+    end
+
+    return filtered
 end
 
 -- Returns true if any value in the table matches the given predicate.

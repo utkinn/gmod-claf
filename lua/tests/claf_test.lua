@@ -2,11 +2,44 @@ include 'claf.lua'
 
 -- Unit tests.
 
+local bar = '__________________________________________________'
+
 local tests = {
     --- Self-test ---
 
     function()
         print 'Running CLAF tests...'
+        print(bar)
+    end,
+
+    function()
+        print 'assertNot()...'
+
+        assertNot(false)
+    end,
+
+    function()
+        print 'assertNotNil()...'
+
+        assertNotNil(1)
+    end,
+
+    function()
+        print 'assertNil()...'
+
+        assertNil(nil)
+    end,
+
+    function()
+        print 'assertNoError()...'
+
+        assertNoError(function() end)
+    end,
+
+    function()
+        print 'assertError()...'
+
+        assertError(function() TOTALLY_ILLEGAL_STUFF_HERE() end)
     end,
 
     --- Alias tests ---
@@ -41,6 +74,8 @@ local tests = {
         Run 'x_ = 1'
 
         assert(x_ == 1)
+
+        x_ = nil
     end,
 
     --- Enums and Flags tests ---
@@ -48,7 +83,7 @@ local tests = {
     function()
         print 'Enum structure...'
 
-        local color = Enum('RED', 'GREEN', 'BLUE')
+        local color = Enum { 'RED', 'GREEN', 'BLUE' }
 
         assertNotNil(color.RED)
         assertNotNil(color.GREEN)
@@ -57,7 +92,7 @@ local tests = {
     function()
         print 'Flags structure...'
 
-        local color = Flags('RED', 'GREEN', 'BLUE')
+        local color = Flags { 'RED', 'GREEN', 'BLUE' }
 
         assertNotNil(color.RED)
         assertNotNil(color.GREEN)
@@ -66,47 +101,49 @@ local tests = {
     function()
         print 'Empty enum...'
 
-        local empty = Enum()
+        local empty = Enum {}
 
         assert(#empty == 0)
     end,
     function()
         print 'Empty flags...'
 
-        local empty = Flags()
+        local empty = Flags {}
 
         assert(#empty == 0)
     end,
     function()
         print 'Incorrect enum constant names...'
 
-        assertError(Enum('RED.smth'))
-        assertError(Enum('4abc'))
-        assertError(Enum('!@#$%^&*'))
-        assertError(Enum('smth()'))
-        assertError(Enum('"'))
-        assertError(Enum(''))
-        assertError(Enum('_4'))
-        assertError(Enum('__'))
-        assertError(Enum('_a'))
+        assertError(function() Enum { 'RED.smth' } end)
+        assertError(function() Enum { '4abc' } end)
+        assertError(function() Enum { '!@#$%^&*' } end)
+        assertError(function() Enum { 'smth()' } end)
+        assertError(function() Enum { '"' } end)
+        assertError(function() Enum { '' } end)
+
+        assertNoError(function() Enum { '_4' } end)
+        assertNoError(function() Enum { '__' } end)
+        assertNoError(function() Enum { '_a' } end)
     end,
     function()
         print 'Incorrect flags constant names...'
 
-        assertError(Flags('RED.smth'))
-        assertError(Flags('4abc'))
-        assertError(Flags('!@#$%^&*'))
-        assertError(Flags('smth()'))
-        assertError(Flags('"'))
-        assertError(Flags(''))
-        assertError(Flags('_4'))
-        assertError(Flags('__'))
-        assertError(Flags('_a'))
+        assertError(function() Flags { 'RED.smth' } end)
+        assertError(function() Flags { '4abc' } end)
+        assertError(function() Flags { '!@#$%^&*' } end)
+        assertError(function() Flags { 'smth()' } end)
+        assertError(function() Flags { '"' } end)
+        assertError(function() Flags { '' } end)
+
+        assertNoError(function() Flags { '_4' } end)
+        assertNoError(function() Flags { '__' } end)
+        assertNoError(function() Flags { '_a' } end)
     end,
     function()
         print 'Flag batching/debatching...'
 
-        local color = Flags('RED', 'GREEN', 'BLUE')
+        local color = Flags { 'RED', 'GREEN', 'BLUE' }
 
         local greenAndBlue = bit.bor(color.GREEN, color.BLUE)
         -- RED                  1   001
@@ -123,9 +160,9 @@ local tests = {
     function()
         print 'Map()...'
 
-        local numbers = {1, 2, 3, 4, 5}
+        local numbers = { 1, 2, 3, 4, 5 }
 
-        numbers = Map(function(x) return x * 2 end, numbers)
+        numbers = Map(numbers, function(x) return x * 2 end)
 
         assert(numbers[1] == 2)
         assert(numbers[2] == 4)
@@ -138,16 +175,16 @@ local tests = {
 
         local empty = {}
 
-        local emptyToo = Map(function(x) return x * 2 end, empty)
+        local emptyToo = Map(empty, function(x) return x * 2 end)
 
         assert(#emptyToo == 0)
     end,
     function()
         print 'Filter()...'
 
-        local numbers = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+        local numbers = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }
 
-        numbers = Filter(function(x) return IsEven(x) end, numbers)
+        numbers = Filter(numbers, function(x) return IsEven(x) end)
 
         assert(numbers[1] == 2)
         assert(numbers[2] == 4)
@@ -156,29 +193,77 @@ local tests = {
         assert(numbers[5] == 10)
     end,
     function()
+        print 'Filter() with default predicate...'
+
+        local bools = { false, true, false }
+
+        bools = Filter(bools)
+
+        assert(bools[1])
+    end,
+    function()
         print 'Filter() with empty table...'
 
         local empty = {}
 
-        local emptyToo = Filter(function(x) return true end, empty)
+        local emptyToo = Filter(empty)
+
+        assert(#emptyToo == 0)
+    end,
+    function()
+        print 'FilterKeyed() (values)...'
+
+        local tbl = { a = 'hi', b = 'world' }
+
+        tbl = FilterKeyed(tbl, function(k, v) return v == 'hi' end)
+
+        assert(tbl['a'] == 'hi')
+        assertNil(tbl['b'])
+    end,
+    function()
+        print 'FilterKeyed() (keys)...'
+
+        local tbl = { a = 'hi', b = 'world' }
+
+        tbl = FilterKeyed(tbl, function(k, v) return k == 'a' end)
+
+        assert(tbl['a'] == 'hi')
+        assertNil(tbl['b'])
+    end,
+    function()
+        print 'FilterKeyed() with default predicate...'
+
+        local tbl = { a = false, b = true }
+
+        tbl = FilterKeyed(tbl)
+
+        assert(tbl['b'])
+        assertNil(tbl['a'])
+    end,
+    function()
+        print 'FilterKeyed() with empty table...'
+
+        local empty = {}
+
+        local emptyToo = FilterKeyed(empty)
 
         assert(#emptyToo == 0)
     end,
     function()
         print 'Any()...'
 
-        local numbers = {2, 20, 100, 1}
+        local numbers = { 2, 20, 100, 1 }
 
-        anyIsOdd = Any(numbers, function(x) return IsOdd(x) end)
+        local anyIsOdd = Any(numbers, function(x) return IsOdd(x) end)
 
         assert(anyIsOdd)
     end,
     function()
         print 'Any() with default predicate...'
 
-        local numbers = {true, false, false, true}
+        local numbers = { true, false, false, true }
 
-        any = Any(numbers)
+        local any = Any(numbers)
 
         assert(any)
     end,
@@ -194,18 +279,18 @@ local tests = {
     function()
         print 'All()...'
 
-        local numbers = {2, 20, 100, 1}
+        local numbers = { 2, 20, 100, 1 }
 
-        allIsOdd = All(numbers, function(x) return IsOdd(x) end)
+        local allIsOdd = All(numbers, function(x) return IsOdd(x) end)
 
         assertNot(allIsOdd)
     end,
     function()
         print 'All() with default predicate...'
 
-        local numbers = {true, true}
+        local numbers = { true, true }
 
-        all = All(numbers)
+        local all = All(numbers)
 
         assert(all)
     end,
@@ -214,14 +299,14 @@ local tests = {
 
         local empty = {}
 
-        local shouldBeFalse = All(empty)
+        local shouldBeTrue = All(empty)
 
-        assertNot(shouldBeFalse)
+        assert(shouldBeTrue)
     end,
     function()
         print 'None()...'
 
-        local numbers = {2, 20, 100, 1}
+        local numbers = { 2, 20, 100, 1 }
 
         allIsOdd = None(numbers, function(x) return IsOdd(x) end)
 
@@ -230,7 +315,7 @@ local tests = {
     function()
         print 'None() with default predicate...'
 
-        local numbers = {true, false}
+        local numbers = { true, false }
 
         all = None(numbers)
 
@@ -241,14 +326,14 @@ local tests = {
 
         local empty = {}
 
-        local shouldBeFalse = None(empty)
+        local shouldBeTrue = None(empty)
 
-        assertNot(shouldBeFalse)
+        assert(shouldBeTrue)
     end,
     function()
         print 'Count()...'
 
-        local numbers = {2, 20, 100, 1, 3}
+        local numbers = { 2, 20, 100, 1, 3 }
 
         local odds = Count(numbers, function(x) return IsOdd(x) end)
 
@@ -257,7 +342,7 @@ local tests = {
     function()
         print 'Count() with default predicate...'
 
-        local numbers = {true, false}
+        local numbers = { true, false }
 
         local count = Count(numbers)
 
@@ -275,7 +360,7 @@ local tests = {
     function()
         print 'One()...'
 
-        local numbers = {2, 20, 100, 1, 3}
+        local numbers = { 2, 20, 100, 1, 3 }
 
         local one = One(numbers, function(x) return IsOdd(x) end)
 
@@ -284,7 +369,7 @@ local tests = {
     function()
         print 'One() with default predicate...'
 
-        local numbers = {true, false}
+        local numbers = { true, false }
 
         local one = One(numbers)
 
@@ -302,7 +387,7 @@ local tests = {
     function()
         print 'Few()...'
 
-        local numbers = {2, 20, 100, 1, 3}
+        local numbers = { 2, 20, 100, 1, 3 }
 
         local few = Few(numbers, function(x) return IsOdd(x) end)
 
@@ -311,7 +396,7 @@ local tests = {
     function()
         print 'Few() with default predicate...'
 
-        local numbers = {true, false}
+        local numbers = { true, false }
 
         local few = Few(numbers)
 
@@ -332,11 +417,11 @@ local tests = {
     function()
         print 'Zip() (same source lengths)...'
 
-        local a = {1, 2, 3}
-        local b = {4, 5, 6}
-        local c = {7, 8, 9}
+        local a = { 1, 2, 3 }
+        local b = { 4, 5, 6 }
+        local c = { 7, 8, 9 }
 
-        local zip = Zip(a, b, c)
+        local zip = Zip { a, b, c }
 
         assert(zip[1][1] == 1)
         assert(zip[1][2] == 4)
@@ -351,11 +436,11 @@ local tests = {
     function()
         print 'Zip() (different source lengths)...'
 
-        local a = {1, 2, 3}
-        local b = {4, 5, 6, 7}
-        local c = {8, 9, 10, 11, 12}
+        local a = { 1, 2, 3 }
+        local b = { 4, 5, 6, 7 }
+        local c = { 8, 9, 10, 11, 12 }
 
-        local zip = Zip(a, b, c)
+        local zip = Zip { a, b, c }
 
         assert(zip[1][1] == 1)
         assert(zip[1][2] == 4)
@@ -461,7 +546,8 @@ local tests = {
     --- Tests success ---
 
     function()
-        print 'CLAF tests successful!'
+        print(bar)
+        print 'CLAF TESTS SUCCESSFUL!'
     end
 }
 
