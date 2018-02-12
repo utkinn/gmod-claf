@@ -37,7 +37,7 @@ Try(function()
 end,
 -- error handler
 function(errorMessage)
-    print 'something went wrong: '..errorMessage
+    print('something went wrong: '..errorMessage)
 end)
 ```
 
