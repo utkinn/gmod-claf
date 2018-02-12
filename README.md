@@ -1,4 +1,5 @@
 # CLAF
+![CLAF Logo](logos/logo-250x250.png)
 # Framework for building Garry's Mod addons
 
 CLAF stands for **CL** ean **A** ddon **F** ramework.  
