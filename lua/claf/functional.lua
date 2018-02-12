@@ -76,6 +76,29 @@ function All(table, predicate)
     return true
 end
 
+function Count(table, predicate)
+    if predicate == nil then
+        predicate = function(x) return tobool(x) end
+    end
+
+    local count = 0
+    for _, v in pairs(table) do
+        if predicate(v) then
+            count = count + 1
+        end
+    end
+
+    return count
+end
+
+function One(table, predicate)
+    return Count(table, predicate) == 1
+end
+
+function Few(table, predicate)
+    return Count(table, predicate) > 1
+end
+
 function Zip(...)   -- TODO: Support for different lenghts
     local tables = table.Copy(...)  -- Copying vararg
 

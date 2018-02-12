@@ -245,6 +245,87 @@ local tests = {
 
         assertNot(shouldBeFalse)
     end,
+    function()
+        print 'Count()...'
+
+        local numbers = {2, 20, 100, 1, 3}
+
+        local odds = Count(numbers, function(x) return IsOdd(x) end)
+
+        assert(odds == 2)
+    end,
+    function()
+        print 'Count() with default predicate...'
+
+        local numbers = {true, false}
+
+        local count = Count(numbers)
+
+        assert(count == 1)
+    end,
+    function()
+        print 'Count() with empty table...'
+
+        local empty = {}
+
+        local count = Count(empty)
+
+        assert(count == 0)
+    end,
+    function()
+        print 'One()...'
+
+        local numbers = {2, 20, 100, 1, 3}
+
+        local one = One(numbers, function(x) return IsOdd(x) end)
+
+        assertNot(one)
+    end,
+    function()
+        print 'One() with default predicate...'
+
+        local numbers = {true, false}
+
+        local one = One(numbers)
+
+        assert(one)
+    end,
+    function()
+        print 'One() with empty table...'
+
+        local empty = {}
+
+        local count = One(empty)
+
+        assertNot(one)
+    end,
+    function()
+        print 'Few()...'
+
+        local numbers = {2, 20, 100, 1, 3}
+
+        local few = Few(numbers, function(x) return IsOdd(x) end)
+
+        assert(few)
+    end,
+    function()
+        print 'Few() with default predicate...'
+
+        local numbers = {true, false}
+
+        local few = Few(numbers)
+
+        assertNot(few)
+    end,
+    function()
+        print 'Few() with empty table...'
+
+        local empty = {}
+
+        local few = Few(empty)
+
+        assertNot(few)
+    end,
 
     --- Zip ---
 
