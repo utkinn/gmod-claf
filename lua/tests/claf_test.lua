@@ -39,7 +39,7 @@ local tests = {
     function()
         print 'assertError()...'
 
-        assertError(function() TOTALLY_ILLEGAL_STUFF_HERE() end)
+        assertError(function() (TOTALLY_ILLEGAL_STUFF_HERE()) end)
     end,
 
     --- Alias tests ---
@@ -162,7 +162,7 @@ local tests = {
 
         local numbers = { 1, 2, 3, 4, 5 }
 
-        numbers = Map(numbers, function(x) return x * 2 end)
+        numbers = Map(numbers, function(x) (return x * 2) end)
 
         assert(numbers[1] == 2)
         assert(numbers[2] == 4)
@@ -175,7 +175,7 @@ local tests = {
 
         local empty = {}
 
-        local emptyToo = Map(empty, function(x) return x * 2 end)
+        local emptyToo = Map(empty, function(x) (return x * 2) end)
 
         assert(#emptyToo == 0)
     end,
@@ -184,7 +184,7 @@ local tests = {
 
         local numbers = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }
 
-        numbers = Filter(numbers, function(x) return IsEven(x) end)
+        numbers = Filter(numbers, function(x) (return IsEven(x)) end)
 
         assert(numbers[1] == 2)
         assert(numbers[2] == 4)
@@ -215,7 +215,7 @@ local tests = {
 
         local tbl = { a = 'hi', b = 'world' }
 
-        tbl = FilterKeyed(tbl, function(k, v) return v == 'hi' end)
+        tbl = FilterKeyed(tbl, function(k, v) (return v == 'hi') end)
 
         assert(tbl['a'] == 'hi')
         assertNil(tbl['b'])
@@ -225,7 +225,7 @@ local tests = {
 
         local tbl = { a = 'hi', b = 'world' }
 
-        tbl = FilterKeyed(tbl, function(k, v) return k == 'a' end)
+        tbl = FilterKeyed(tbl, function(k, v) (return k == 'a') end)
 
         assert(tbl['a'] == 'hi')
         assertNil(tbl['b'])
@@ -254,7 +254,7 @@ local tests = {
 
         local numbers = { 2, 20, 100, 1 }
 
-        local anyIsOdd = Any(numbers, function(x) return IsOdd(x) end)
+        local anyIsOdd = Any(numbers, function(x) (return IsOdd(x)) end)
 
         assert(anyIsOdd)
     end,
@@ -281,7 +281,7 @@ local tests = {
 
         local numbers = { 2, 20, 100, 1 }
 
-        local allIsOdd = All(numbers, function(x) return IsOdd(x) end)
+        local allIsOdd = All(numbers, function(x) (return IsOdd(x)) end)
 
         assertNot(allIsOdd)
     end,
@@ -308,7 +308,7 @@ local tests = {
 
         local numbers = { 2, 20, 100, 1 }
 
-        allIsOdd = None(numbers, function(x) return IsOdd(x) end)
+        allIsOdd = None(numbers, function(x) (return IsOdd(x)) end)
 
         assertNot(allIsOdd)
     end,
@@ -335,7 +335,7 @@ local tests = {
 
         local numbers = { 2, 20, 100, 1, 3 }
 
-        local odds = Count(numbers, function(x) return IsOdd(x) end)
+        local odds = Count(numbers, function(x) (return IsOdd(x)) end)
 
         assert(odds == 2)
     end,
@@ -362,7 +362,7 @@ local tests = {
 
         local numbers = { 2, 20, 100, 1, 3 }
 
-        local one = One(numbers, function(x) return IsOdd(x) end)
+        local one = One(numbers, function(x) (return IsOdd(x)) end)
 
         assertNot(one)
     end,
@@ -389,7 +389,7 @@ local tests = {
 
         local numbers = { 2, 20, 100, 1, 3 }
 
-        local few = Few(numbers, function(x) return IsOdd(x) end)
+        local few = Few(numbers, function(x) (return IsOdd(x)) end)
 
         assert(few)
     end,
@@ -516,7 +516,7 @@ local tests = {
     function()
         print 'Min()...'
 
-        local tbl = {2, 5, 34, 73, 1, 6}
+        local tbl = { 2, 5, 34, 73, 1, 6 }
 
         local min = Min(tbl)
 
@@ -525,7 +525,7 @@ local tests = {
     function()
         print 'Max()...'
 
-        local tbl = {2, 5, 34, 73, 1, 6}
+        local tbl = { 2, 5, 34, 73, 1, 6 }
 
         local max = Max(tbl)
 

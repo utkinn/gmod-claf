@@ -6,7 +6,7 @@ local CLAF_hookAutoNameID = 1
 -- Always creates an error 'not implemented'.
 function TODO(reason)
     if reason ~= nil then
-        error ('not implemented: '..reason)
+        error('not implemented: '..reason)
     else
         error 'not implemented'
     end
