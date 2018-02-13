@@ -24,7 +24,7 @@ end
 -- ...and in functional way
 
 local numbers = { 1, 2, 3, 4, 5 }
-numbers = Filter(numbers, function(x) (return IsOdd(x)) end)
+numbers = Filter(numbers, function(x) return IsOdd(x) end)
 ```
 
 ## Popular language features simulation
