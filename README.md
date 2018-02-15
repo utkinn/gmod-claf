@@ -59,13 +59,13 @@ help = bit.band(userSettings, Settings.SHOW_HELP)    -- true
 hints = bit.band(userSettings, Settings.SHOW_HINTS) -- false
 ```
 
-<!-- # How to use?
+# How to use?
 ## While the addon development
-1. Subscribe to CLAF addon in Steam Workshop.
+1. Subscribe to [CLAF addon in Steam Workshop](http://steamcommunity.com/sharedfiles/filedetails/?id=1302107512).
 2. Add the following line to the beginning of the source files where CLAF is used:
 ```lua
 include 'claf.lua'
 ```
 
 ## When it's time to publish
-Add dependency of CLAF Steam Workshop addon on your addon. -->
+Add dependency of [CLAF Steam Workshop addon](http://steamcommunity.com/sharedfiles/filedetails/?id=1302107512) on your addon.
