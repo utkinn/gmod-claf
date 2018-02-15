@@ -39,7 +39,7 @@ local tests = {
     function()
         print 'assertError()...'
 
-        assertError(function() (TOTALLY_ILLEGAL_STUFF_HERE()) end)
+        assertError(function() TOTALLY_ILLEGAL_STUFF_HERE() end)
     end,
 
     --- Alias tests ---

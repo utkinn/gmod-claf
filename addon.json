@@ -1,0 +1,9 @@
+{
+  "title": "CLAF: Addon Development Library",
+  "type": "tool",
+  "ignore": [
+      ".git/",
+      "logos/",
+      "README.md"
+  ]
+}
