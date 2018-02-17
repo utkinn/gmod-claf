@@ -53,13 +53,21 @@ if SERVER then
         ErrorIfNil(receiver)
 
         net.Start(networkString)
-        WriteMessageData(data)
+        if istable(data) then
+            WriteMessageData(data)
+        else
+            net.Write(data)
+        end
         net.Send(receiver)
     end
 else
     function net.QuickMsg(networkString, data)
         net.Start(networkString)
-        WriteMessageData(data)
+        if istable(data) then
+            WriteMessageData(data)
+        else
+            net.Write(data)
+        end
         net.SendToServer()
     end
 end
