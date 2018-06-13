@@ -543,6 +543,20 @@ local tests = {
         assertNil(max)
     end,
 
+    --- f'str' ---
+
+    function()
+        print 'String interpolation...'
+
+        local a = '1'
+        b = '{2}'
+        local c = 3
+        d = 4
+        local str = f'{a} {b}, {c} {d}'
+
+        assert(str == '1 {2}, 3 4', 'result = '..str)
+    end,
+
     --- Tests success ---
 
     function()

@@ -81,3 +81,30 @@ end
 function IsOdd(x)
     return x % 2 != 0
 end
+
+function f(str)
+    -- Table of variable names to substitute
+    local varibleNames = string.match(str, '{.+}')
+
+    -- Removing curly braces
+    for k, v in pairs(varibleNames) do
+        varibleNames[k] = string.sub(v, 1, -1)
+    end
+
+    -- Looking through this function caller's locals
+    local name, value
+    local locals = {}
+    local i = 1
+    while true do
+        name, value = debug.getlocal(2, i)
+        if name == nil then break end
+        locals[name] = value
+        i = i + 1
+    end
+
+    for _, varName in pairs(varibleNames) do
+        str = string.Replace(str, '{'..varName..'}', Either(locals[varName] == nil, _G[varName], locals[varName]))
+    end
+
+    return str
+end
