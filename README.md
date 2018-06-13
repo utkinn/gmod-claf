@@ -59,6 +59,14 @@ help = bit.band(userSettings, Settings.SHOW_HELP)    -- true
 hints = bit.band(userSettings, Settings.SHOW_HINTS) -- false
 ```
 
+## String interpolation
+Easily insert variables' values into strings using the **string interpolation**:
+```lua
+local name = 'John'
+str = f'My name is {name}'
+-- 'My name is John'
+```
+
 # How to use?
 ## While the addon development
 1. Subscribe to [CLAF addon in Steam Workshop](http://steamcommunity.com/sharedfiles/filedetails/?id=1302107512).
