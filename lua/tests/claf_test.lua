@@ -552,9 +552,34 @@ local tests = {
         b = '{2}'
         local c = 3
         d = 4
-        local str = f'{a} {b}, {c} {d}'
+        local e = nil
+        local str = f'{a} {b}, {c}{d}{e}'
 
-        assert(str == '1 {2}, 3 4', 'result = '..str)
+        assert(str == '1 {2}, 34nil', 'result = "'..str..'"')
+
+        b, d = nil
+    end,
+
+    function()
+        print 'String interpolation with no substitution marks...'
+
+        local a = '1'
+        b = '{2}'
+        local c = 3
+        d = 4
+        local str = f'None'
+
+        assert(str == 'None', 'result = "'..str..'"')
+
+        b, d = nil
+    end,
+
+    function()
+        print 'String interpolation with junk in substitution mark...'
+
+        local str = f'{6395  92472 2842 +=+ ^_^}: what?'
+
+        assert(str == 'nil: what?', 'result = "'..str..'"')
     end,
 
     --- Tests success ---

@@ -84,11 +84,10 @@ end
 
 function f(str)
     -- Table of variable names to substitute
-    local varibleNames = string.match(str, '{.+}')
-
-    -- Removing curly braces
-    for k, v in pairs(varibleNames) do
-        varibleNames[k] = string.sub(v, 1, -1)
+    local variableNamesIter = string.gmatch(str, '{.-}')
+    local variableNames = {}
+    for v in variableNamesIter do
+        table.insert(variableNames, v)
     end
 
     -- Looking through this function caller's locals
@@ -102,8 +101,20 @@ function f(str)
         i = i + 1
     end
 
-    for _, varName in pairs(varibleNames) do
-        str = string.Replace(str, '{'..varName..'}', Either(locals[varName] == nil, _G[varName], locals[varName]))
+    for _, varName in pairs(variableNames) do
+        local varNameWithoutBraces = string.sub(varName, 2, -2)
+        local value
+        if locals[varNameWithoutBraces] ~= nil then
+            value = locals[varNameWithoutBraces]
+        else
+            value = _G[varNameWithoutBraces]
+        end
+
+        -- Textual representation for nil
+        if value == nil then
+            value = 'nil'
+        end
+        str = string.Replace(str, varName, value)
     end
 
     return str
