@@ -211,6 +211,19 @@ local tests = {
         assert(#emptyToo == 0)
     end,
     function()
+        print '"Fancy" Filter()...'
+
+        local numbers = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }
+
+        numbers = Filter(numbers, IsEven)
+
+        assert(numbers[1] == 2)
+        assert(numbers[2] == 4)
+        assert(numbers[3] == 6)
+        assert(numbers[4] == 8)
+        assert(numbers[5] == 10)
+    end,
+    function()
         print 'FilterKeyed() (values)...'
 
         local tbl = { a = 'hi', b = 'world' }
@@ -559,7 +572,6 @@ local tests = {
 
         b, d = nil
     end,
-
     function()
         print 'String interpolation with no substitution marks...'
 
@@ -573,13 +585,29 @@ local tests = {
 
         b, d = nil
     end,
-
     function()
         print 'String interpolation with junk in substitution mark...'
 
         local str = f'{6395  92472 2842 +=+ ^_^}: what?'
 
         assert(str == 'nil: what?', 'result = "'..str..'"')
+    end,
+    function()
+        print 'String interpolation escaping...'
+
+        local str = f'{{These braces are not meant to be substituted}}'
+
+        assert(str == '{{These braces are not meant to be substituted}}', 'result = "'..str..'"')
+    end,
+    function()
+        print 'Recursive string interpolation...'
+
+        _G['a{3}'] = 1
+        local str = f'{a{3}}'
+
+        assert(str == '1', 'result = "'..str..'"')
+
+        _G['a{3}'] = nil
     end,
 
     --- Tests success ---
