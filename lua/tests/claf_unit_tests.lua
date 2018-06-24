@@ -599,15 +599,23 @@ local tests = {
 
         assert(str == '{{These braces are not meant to be substituted}}', 'result = "'..str..'"')
     end,
+    -- function()
+    --     print 'Recursive string interpolation...'
+    --
+    --     _G['a{3}'] = 1
+    --     local str = f'{a{3}}'
+    --
+    --     assert(str == '1', 'result = "'..str..'"')
+    --
+    --     _G['a{3}'] = nil
+    -- end,
     function()
-        print 'Recursive string interpolation...'
+        print 'String interpolation with table member...'
 
-        _G['a{3}'] = 1
-        local str = f'{a{3}}'
+        local tbl = {a = 1}
+        local str = f'-{tbl.a}-'
 
-        assert(str == '1', 'result = "'..str..'"')
-
-        _G['a{3}'] = nil
+        assert(str == '-1-', 'result = "'..str..'"')
     end,
 
     --- Tests success ---
