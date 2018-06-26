@@ -5,7 +5,7 @@ local function measureExecutionTime(func, repeatN)
     for _ = 1, repeatN do
         func()
     end
-    return os.time() - timestampBeforeExecution
+    return SysTime() - timestampBeforeExecution
 end
 
 local bar = '__________________________________________________'
