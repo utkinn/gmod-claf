@@ -566,7 +566,7 @@ local tests = {
         local c = 3
         d = 4
         local e = nil
-        local str = f'{a} {b}, {c}{d}{e}'
+        local str = fmt'{a} {b}, {c}{d}{e}'
 
         assert(str == '1 {2}, 34nil', 'result = "'..str..'"')
 
@@ -579,7 +579,7 @@ local tests = {
         b = '{2}'
         local c = 3
         d = 4
-        local str = f'None'
+        local str = fmt'None'
 
         assert(str == 'None', 'result = "'..str..'"')
 
@@ -588,14 +588,14 @@ local tests = {
     function()
         print 'String interpolation with junk in substitution mark...'
 
-        local str = f'{6395  92472 2842 +=+ ^_^}: what?'
+        local str = fmt'{6395  92472 2842 +=+ ^_^}: what?'
 
         assert(str == 'nil: what?', 'result = "'..str..'"')
     end,
     function()
         print 'String interpolation escaping...'
 
-        local str = f'{{These braces are not meant to be substituted}}'
+        local str = fmt'{{These braces are not meant to be substituted}}'
 
         assert(str == '{{These braces are not meant to be substituted}}', 'result = "'..str..'"')
     end,
@@ -613,7 +613,7 @@ local tests = {
         print 'String interpolation with table member...'
 
         local tbl = {a = 1}
-        local str = f'-{tbl.a}-'
+        local str = fmt'-{tbl.a}-'
 
         assert(str == '-1-', 'result = "'..str..'"')
     end,

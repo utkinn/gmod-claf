@@ -82,7 +82,12 @@ function IsOdd(x)
     return x % 2 != 0
 end
 
+-- Deprecated
 function f(str)
+    return fmt(str)
+end
+
+function fmt(str)
     -- Table of variable names to substitute
     local variableNamesIter = string.gmatch(str, '{.-}')
     local variableNames = {}
