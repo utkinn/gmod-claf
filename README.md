@@ -63,7 +63,7 @@ hints = bit.band(userSettings, Settings.SHOW_HINTS) -- false
 Easily insert variables' values into strings using the **string interpolation**:
 ```lua
 local name = 'John'
-str = f'My name is {name}'
+str = fmt'My name is {name}'
 -- 'My name is John'
 ```
 
