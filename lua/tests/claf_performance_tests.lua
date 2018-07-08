@@ -1,7 +1,7 @@
 include 'claf.lua'
 
 local function measureExecutionTime(func, repeatN)
-    local timestampBeforeExecution = os.time()
+    local timestampBeforeExecution = SysTime()
     for _ = 1, repeatN do
         func()
     end
@@ -110,7 +110,7 @@ local tests = {
         local a = '1'
         local c = 3
         print(measureExecutionTime(function()
-            f'{a} {c}'
+            fmt'{a} {c}'
         end, 2500000)..' s')
     end,
     function()
@@ -119,7 +119,7 @@ local tests = {
         a = '1'
         c = 3
         print(measureExecutionTime(function()
-            f'{a} {c}'
+            fmt'{a} {c}'
         end, 2500000)..' s')
         a, c = nil, nil
     end
