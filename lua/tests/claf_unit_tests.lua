@@ -597,7 +597,7 @@ local tests = {
 
         local str = fmt'{{These braces are not meant to be substituted}}'
 
-        assert(str == '{{These braces are not meant to be substituted}}', 'result = "'..str..'"')
+        assert(str == '{These braces are not meant to be substituted}', 'result = "'..str..'"')
     end,
     -- function()
     --     print 'Recursive string interpolation...'

@@ -93,6 +93,16 @@ function f(str)
 end
 
 function fmt(str)
+    -- ESCAPE_PLACEHOLDER_* are NOT empty. They actually contain "object replacement characters" (U+FFFC).
+    -- "{{" is replaced with one symbol, "}}" is replaced with two symbols.
+    -- U+FFFC was chosen because it wouldn't be used by anyone very likely.
+    local ESCAPE_PLACEHOLDER_BEGIN = '￼'  -- U+FFFC, x1
+    local ESCAPE_PLACEHOLDER_END = '￼￼'  -- U+FFFC, x2
+
+    -- Replacing escaped curly brackets ("{{" and "}}") with escape placeholders.
+    str = string.Replace(str, '{{', ESCAPE_PLACEHOLDER_BEGIN)
+    str = string.Replace(str, '}}', ESCAPE_PLACEHOLDER_END)
+
     -- Table of variable names to substitute
     local variableNamesIter = string.gmatch(str, '{.-}')
     local variableNames = {}
@@ -126,6 +136,10 @@ function fmt(str)
         end
         str = string.Replace(str, varName, value)
     end
+
+    -- Restoring escaped brackets
+    str = string.Replace(str, ESCAPE_PLACEHOLDER_END, '}')
+    str = string.Replace(str, ESCAPE_PLACEHOLDER_BEGIN, '{')
 
     return str
 end
