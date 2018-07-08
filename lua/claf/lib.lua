@@ -82,8 +82,13 @@ function IsOdd(x)
     return x % 2 != 0
 end
 
+local f_deprecation_warns = 0
 -- Deprecated
 function f(str)
+    if f_deprecation_warns < 10 then
+        MsgC(Color(255, 255, 0), '[CLAF] f() is deprecated. Use fmt() instead.')
+        f_deprecation_warns = f_deprecation_warns + 1
+    end
     return fmt(str)
 end
 
