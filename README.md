@@ -77,3 +77,4 @@ include 'claf.lua'
 
 ## When it's time to publish
 Add dependency of [CLAF Steam Workshop addon](http://steamcommunity.com/sharedfiles/filedetails/?id=1302107512) on your addon.
+Alternatively, you can copy the library files into your addon, but don't forget to include a license notice (see [LICENSE](LICENSE)).
