@@ -27,6 +27,20 @@ local numbers = { 1, 2, 3, 4, 5 }
 numbers = Filter(numbers, function(x) return IsOdd(x) end)
 ```
 
+```lua
+local inp = {
+    { { x = 1 }, { x = 2 } },
+    { { x = 3 }, { x = 4 } },
+}
+
+local result = Pipe(inp)
+    :Flatten()
+    :Map('x')
+    :Sum()
+
+assert(result == 10)
+```
+
 ## Popular language features simulation
 ### Try-catch
 Run code that can cause errors in `Try()`:
