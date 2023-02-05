@@ -4,6 +4,7 @@
   "ignore": [
       ".git/*",
       "logos/*",
-      "README.md"
+      "README.md",
+      "LICENSE"
   ]
 }
