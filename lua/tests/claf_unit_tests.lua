@@ -180,6 +180,17 @@ local tests = {
         assert(#emptyToo == 0)
     end,
     function()
+        print 'Map() with key editor...'
+
+        local numbers = { { x = 1 }, { x = 2 }, { x = 3 } }
+
+        local oneTwoThree = Pluck(numbers, 'x')
+
+        assert(oneTwoThree[1] == 1)
+        assert(oneTwoThree[2] == 2)
+        assert(oneTwoThree[3] == 3)
+    end,
+    function()
         print 'Filter()...'
 
         local numbers = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }
@@ -468,6 +479,19 @@ local tests = {
         assert(#zip[1] == 3)
         assert(#zip[2] == 3)
         assert(#zip[3] == 3)
+    end,
+
+    --- Flatten ---
+
+    function()
+        print 'Flatten()...'
+
+        local before = { { 1, 2, 3 }, { 4, 5, 6 } }
+        local expectedAfter = { 1, 2, 3, 4, 5, 6 }
+
+        local actualAfter = Flatten(before)
+
+        assert(table.concat(actualAfter) == table.concat(expectedAfter))
     end,
 
     --- Try/catch ---

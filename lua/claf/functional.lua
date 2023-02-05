@@ -1,8 +1,14 @@
 -- Means of functional programming.
 
 -- Applies "editor" function to all elements of the provided table.
+-- If "editor" is a string, it will be used as a key to select a value from each element.
 function Map(source, editor)
     local modified = table.Copy(source)
+
+    if isstring(editor) then
+        local key = editor
+        editor = function(x) return x[key] end
+    end
 
     -- Applying editor function to all tables
     for k, v in pairs(modified) do -- Iterating through keys and values
@@ -101,6 +107,19 @@ end
 
 function Few(source, predicate)
     return Count(source, predicate) > 1
+end
+
+-- Given a table of tables, returns a new table with all the elements of the provided tables.
+function Flatten(source)
+    local flattened = {}
+
+    for _, v in ipairs(source) do
+        for _, v2 in ipairs(v) do
+            table.insert(flattened, v2)
+        end
+    end
+
+    return flattened
 end
 
 function Zip(tables)   -- TODO: Support for different lenghts
