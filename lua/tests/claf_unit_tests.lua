@@ -184,7 +184,7 @@ local tests = {
 
         local numbers = { { x = 1 }, { x = 2 }, { x = 3 } }
 
-        local oneTwoThree = Pluck(numbers, 'x')
+        local oneTwoThree = Map(numbers, 'x')
 
         assert(oneTwoThree[1] == 1)
         assert(oneTwoThree[2] == 2)
