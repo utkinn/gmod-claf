@@ -274,6 +274,34 @@ local tests = {
         assert(#emptyToo == 0)
     end,
     function()
+        print 'Reduce()...'
+
+        local numbers = { 1, 2, 3 }
+        local sum = Reduce(numbers, function(acc, x) return acc + x end, 3)
+        assert(sum == 9)
+    end,
+    function()
+        print 'Reduce() without initial value...'
+
+        local numbers = { 1, 2, 3 }
+        local sum = Reduce(numbers, function(acc, x) return acc + x end)
+        assert(sum == 6)
+    end,
+    function()
+        print 'Reduce() with empty table without initial value...'
+
+        local empty = {}
+        local sum = Reduce(empty, function(acc, x) return acc + x end)
+        assert(sum == nil)
+    end,
+    function()
+        print 'Sum()...'
+
+        local numbers = { 1, 2, 3 }
+        local sum = Sum(numbers)
+        assert(sum == 6)
+    end,
+    function()
         print 'Any()...'
 
         local numbers = { 2, 20, 100, 1 }

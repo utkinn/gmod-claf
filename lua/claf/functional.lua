@@ -52,6 +52,37 @@ function FilterKeyed(source, predicate)
     return filtered
 end
 
+-- Executes the `reducer` callback function on each element of the table, 
+-- in order, passing in the return value from the calculation on the preceding element. 
+-- The final result of running the reducer across all elements of the array is a single value.
+--
+-- If `initial` is provided, it will be used as the initial value of the accumulator.
+-- Otherwise `initial` is assumed to be `source[1]`.
+function Reduce(source, reducer, initial)
+    local sourceCopy = table.Copy(source)
+
+    if initial == nil and #sourceCopy == 0 then
+        return nil
+    end
+
+    if initial == nil then
+        initial = source[1]
+        table.remove(sourceCopy, 1)
+    end
+    local reduced = initial
+
+    for _, v in ipairs(sourceCopy) do
+        reduced = reducer(reduced, v)
+    end
+
+    return reduced
+end
+
+-- Returns the sum of all values in the table.
+function Sum(source)
+    return Reduce(source, function(a, b) return a + b end, 0)
+end
+
 -- Returns true if any value in the table matches the given predicate.
 function Any(source, predicate)
     if predicate == nil then
