@@ -608,6 +608,41 @@ local tests = {
         assertNil(max)
     end,
 
+    --- Pipe ---
+
+    function()
+        print 'Pipe() - ToTable()...'
+
+        local inp = {
+            { { x = 1 }, { x = 2 } },
+            { { x = 3 }, { x = 4 } },
+        }
+        local result = Pipe(inp)
+            :Flatten()
+            :Map('x')
+            :ToTable()
+
+        assert(result[1] == 1)
+        assert(result[2] == 2)
+        assert(result[3] == 3)
+        assert(result[4] == 4)
+    end,
+
+    function()
+        print 'Pipe() - Sum()...'
+
+        local inp = {
+            { { x = 1 }, { x = 2 } },
+            { { x = 3 }, { x = 4 } },
+        }
+        local result = Pipe(inp)
+            :Flatten()
+            :Map('x')
+            :Sum()
+
+        assert(result == 10)
+    end,
+
     --- f'str' ---
 
     function()
