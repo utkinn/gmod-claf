@@ -542,6 +542,20 @@ local tests = {
         assert(x == 2)
     end,
     function()
+        print 'Try - catch clause argument...'
+
+        local caughtErr
+        Try(
+            function()
+                error('test')
+            end,
+            function(err)
+                caughtErr = err
+            end
+        )
+        assertNotNil(string.match(caughtErr, 'test'))
+    end,
+    function()
         print 'Try (error occurs) with finally...'
 
         local x
