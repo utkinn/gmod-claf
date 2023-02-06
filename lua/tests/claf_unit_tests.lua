@@ -643,6 +643,16 @@ local tests = {
         assert(result == 10)
     end,
 
+    function()
+        print 'Pipe() with invalid method...'
+
+        local inp = { 1, 2, 3 }
+
+        assertError(function()
+            Pipe(inp):InvalidMethod()
+        end)
+    end,
+
     --- f'str' ---
 
     function()
