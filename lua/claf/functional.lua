@@ -145,8 +145,12 @@ function Flatten(source)
     local flattened = {}
 
     for _, v in ipairs(source) do
-        for _, v2 in ipairs(v) do
-            table.insert(flattened, v2)
+        if istable(v) then
+            for _, v2 in ipairs(v) do
+                table.insert(flattened, v2)
+            end
+        else
+            table.insert(flattened, v)
         end
     end
 
