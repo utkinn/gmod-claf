@@ -5,6 +5,7 @@
 include 'claf/aliases.lua'
 include 'claf/enums.lua'
 include 'claf/lib.lua'
+include 'claf/fmt.lua'
 include 'claf/functional.lua'
 include 'claf/pipe.lua'
 include 'claf/assertions.lua'
