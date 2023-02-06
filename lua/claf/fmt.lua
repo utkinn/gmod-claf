@@ -40,7 +40,18 @@ function fmt(str)
     for _, varName in pairs(variableNames) do
         local varNameWithoutBraces = string.sub(varName, 2, -2)
         local value
-        if locals[varNameWithoutBraces] ~= nil then
+        if string.match(varNameWithoutBraces, '%.') then
+            local varNameParts = string.Explode('.', varNameWithoutBraces)
+            if locals[varNameParts[1]] ~= nil then
+                value = locals[varNameParts[1]]
+            else
+                value = _G[varNameParts[1]]
+            end
+            table.remove(varNameParts, 1)
+            for _, part in pairs(varNameParts) do
+                value = value[part]
+            end
+        elseif locals[varNameWithoutBraces] ~= nil then
             value = locals[varNameWithoutBraces]
         else
             value = _G[varNameWithoutBraces]
