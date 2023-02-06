@@ -79,7 +79,7 @@ end
 
 -- Returns true if x is odd, false otherwise.
 function IsOdd(x)
-    return x % 2 != 0
+    return x % 2 ~= 0
 end
 
 local f_deprecation_warns = 0
