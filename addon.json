@@ -5,6 +5,10 @@
       ".git/*",
       "logos/*",
       "README.md",
-      "LICENSE"
+      "LICENSE",
+      "luacov.*",
+      ".gitignore",
+      ".luacov",
+      "spec/*"
   ]
 }
