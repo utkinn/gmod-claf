@@ -95,12 +95,7 @@ Alternatively, you can copy the library files into your addon, but don't forget 
 
 # Running tests
 
-To run unit tests, use the following Garry's Mod console command:
-```
-lua_openscript tests/claf_unit_tests.lua
-```
-
-To run perfomance tests:
-```
-lua_openscript tests/claf_performance_tests.lua
-```
+1. Install [LuaRocks](https://luarocks.org/)
+2. Install [busted](https://olivinelabs.com/busted/) (and optionally [luacov](https://github.com/lunarmodules/luacov)
+3. Run `busted` in the root directory of the project.   
+   If you want to run tests with coverage, run `busted -c` instead. After that, run `luacov` to generate an HTML report. If this fails, you can temporarily remove `.luacov` file and run `luacov` to generate a text-formatted report.
