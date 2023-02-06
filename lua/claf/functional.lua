@@ -172,6 +172,10 @@ function Zip(tables)   -- TODO: Support for different lenghts
 end
 
 function Try(try, catch, finally)
+    if istable(try) then
+        try, catch, finally = try[1], try.catch, try.finally
+    end
+
     local noErrors, message = pcall(try)
     if catch ~= nil and not noErrors then catch(message) end
     if finally ~= nil then finally() end

@@ -589,6 +589,27 @@ local tests = {
         assertNoError(wrong)
         assert(x == 2)
     end,
+    function()
+        print 'Try - table call syntax...'
+
+        local catchRun = false
+        local finallyRun = false
+
+        Try {
+            function()
+                error('test')
+            end,
+            catch = function()
+                catchRun = true
+            end,
+            finally = function()
+                finallyRun = true
+            end
+        }
+
+        assert(catchRun)
+        assert(finallyRun)
+    end,
 
     --- Min and Max ---
 
