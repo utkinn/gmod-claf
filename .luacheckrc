@@ -10,6 +10,7 @@ stds.gmod = {
                 "Merge",
                 "Copy",
                 "IsSequential",
+                "Reverse",
             }
         },
         "tobool",

@@ -8,7 +8,7 @@ describe("Sorted", function()
         assert.are.same({ 1, 2, 3 }, sorted)
         assert.are.same({ 3, 1, 2 }, t)
     end)
-    
+
     it("returns a copy of the table sorted using '<' if sorter is not specified", function()
         local t = { 3, 1, 2 }
         local sorted = s.Sorted(t)
@@ -24,7 +24,7 @@ describe("SortedDesc", function()
         assert.are.same({ 3, 2, 1 }, sorted)
         assert.are.same({ 3, 1, 2 }, t)
     end)
-    
+
     it("returns a copy of the table sorted in reverse order using '<' if sorter is not specified", function()
         local t = { 3, 1, 2 }
         local sorted = s.SortedDesc(t)
