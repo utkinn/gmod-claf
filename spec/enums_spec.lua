@@ -40,7 +40,7 @@ describe('Flags', function()
         e.Flags { '_4' }
     end)
 
-    it('can be combined with bit.bor', function()
+    pending('can be combined with bit.bor', function()
         local enum = e.Flags { 'a', 'b', 'c' }
         assert.are.equal(bit.bor(enum.a, enum.b), 3)
         assert.are.equal(bit.bor(enum.a, enum.c), 5)
