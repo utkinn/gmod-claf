@@ -3,7 +3,7 @@
 package = "CLAF"
 version = "1.0.0-1"
 dependencies = {
-    "lua >= 5.1",
+    "lua >= 5.2",
     "busted ~> 2",
     "luacov ~> 0.15",
     "luacheck ~> 0.23",
