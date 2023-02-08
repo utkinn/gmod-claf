@@ -1,7 +1,7 @@
 local mod = {}
 
 local function pipeIndex(self, funcName)
-    return function(_self, ...)
+    return function(_, ...)
         local transformFunction = _G[funcName]
         if transformFunction == nil then
             error('Pipe: ' .. funcName .. ' is not a valid method')
