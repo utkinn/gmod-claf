@@ -286,4 +286,18 @@ function mod.Last(source)
     return source[#source]
 end
 
+function mod.Sorted(source, sorter)
+    local sorted = table.Copy(source)
+    table.sort(sorted, sorter)
+    return sorted
+end
+
+function mod.SortedDesc(source, sorter)
+    local sorted = table.Copy(source)
+    table.sort(sorted, sorter)
+    return table.Reverse(sorted)
+end
+
+mod.Reversed = table.Reverse
+
 return mod
