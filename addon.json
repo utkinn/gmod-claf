@@ -12,6 +12,7 @@
       "spec/*",
       ".busted",
       ".luacheckrc",
-      "maint.lua"
+      "maint.lua",
+      "claf-1.0.0-1.rockspec"
   ]
 }
