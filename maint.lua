@@ -10,7 +10,7 @@ local tasks = {
     test = "busted",
     cover = { rmF .. " luacov.*", "busted -c", "luacov" },
     lint = "luacheck .",
-    ci = { children = { "cover", "lint" } }
+    ci = { children = { "test", "lint" } }
 }
 
 local function runTask(taskName)
