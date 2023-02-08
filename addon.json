@@ -9,6 +9,8 @@
       "luacov.*",
       ".gitignore",
       ".luacov",
-      "spec/*"
+      "spec/*",
+      ".busted",
+      ".luacheckrc"
   ]
 }
