@@ -19,6 +19,8 @@ jobs:
       - name: Install dependencies
         run: sudo luarocks install claf-1.0.0-1.rockspec
         
+      - run: chmod +x maint.lua
+        
       - name: Run tests
         run: ./maint.lua test
         
