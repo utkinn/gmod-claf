@@ -278,4 +278,12 @@ function mod.DropRightWhile(source, predicate)
     return result
 end
 
+function mod.First(source)
+    return source[1]
+end
+
+function mod.Last(source)
+    return source[#source]
+end
+
 return mod
