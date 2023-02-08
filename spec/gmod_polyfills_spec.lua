@@ -88,6 +88,15 @@ describe('table.Copy', function()
     end)
 end)
 
+describe("table.Reverse", function()
+    it("returns a reversed copy of the given table", function()
+        local tbl = { 1, 2, 3, 4, 5 }
+        local reversed = table.Reverse(tbl)
+        assert.are.same({ 5, 4, 3, 2, 1 }, reversed)
+        assert.are.not_equal(tbl, reversed)
+    end)
+end)
+
 describe('tobool', function()
     it('returns true if the given value is true, "true", a number != 0, a string != "false" or a table', function()
         assert.True(tobool(true))

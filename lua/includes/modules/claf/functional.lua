@@ -200,4 +200,44 @@ function mod.Min(source)
     return sorted[1]
 end
 
+function mod.Take(source, n)
+    local taken = {}
+    for i = 1, n do
+        table.insert(taken, source[i])
+    end
+    return taken
+end
+
+function mod.TakeRight(source, n)
+    local taken = {}
+    for i = #source - n + 1, #source do
+        table.insert(taken, source[i])
+    end
+    return taken
+end
+
+function mod.TakeWhile(source, predicate)
+    local taken = {}
+    for _, v in ipairs(source) do
+        if predicate(v) then
+            table.insert(taken, v)
+        else
+            break
+        end
+    end
+    return taken
+end
+
+function mod.TakeRightWhile(source, predicate)
+    local taken = {}
+    for i = #source, 1, -1 do
+        if predicate(source[i]) then
+            table.insert(taken, source[i])
+        else
+            break
+        end
+    end
+    return table.Reverse(taken)
+end
+
 return mod

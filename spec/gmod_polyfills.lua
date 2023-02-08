@@ -41,6 +41,14 @@ function table.Copy(t)
     return copy
 end
 
+function table.Reverse(t)
+    local reversed = {}
+    for i = #t, 1, -1 do
+        table.insert(reversed, t[i])
+    end
+    return reversed
+end
+
 function tobool(x)
     local falsyValues = {
         [false] = true,
