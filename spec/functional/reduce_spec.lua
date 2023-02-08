@@ -1,5 +1,5 @@
 require 'spec/gmod_polyfills'
-require 'lua/claf/functional'
+local Reduce = require('claf/functional').Reduce
 
 describe('Reduce', function()
     it('reduces a table with initial value', function()
@@ -7,7 +7,7 @@ describe('Reduce', function()
         local sum = Reduce(inp, function(acc, x) return acc + x end, 3)
         assert.are.equal(9, sum)
     end)
-    
+
     it('reduces a table without initial value given', function()
         local inp = { 1, 2, 3 }
         local sum = Reduce(inp, function(acc, x) return acc + x end)

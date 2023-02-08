@@ -1,8 +1,10 @@
 -- Means of functional programming.
 
+local mod = {}
+
 -- Applies "editor" function to all elements of the provided table.
 -- If "editor" is a string, it will be used as a key to select a value from each element.
-function Map(source, editor)
+function mod.Map(source, editor)
     local modified = table.Copy(source)
 
     if isstring(editor) then
@@ -19,7 +21,7 @@ function Map(source, editor)
 end
 
 -- Filters the provided tables.
-function Filter(source, predicate)
+function mod.Filter(source, predicate)
     local filtered = {}
     if predicate == nil then
         predicate = function(x) return tobool(x) end
@@ -36,10 +38,10 @@ function Filter(source, predicate)
 end
 
 -- Filters the provided keyed (non-sequential) tables.
-function FilterKeyed(source, predicate)
+function mod.FilterKeyed(source, predicate)
     local filtered = {}
     if predicate == nil then
-        predicate = function(k, v) return tobool(v) end
+        predicate = function(_, v) return tobool(v) end
     end
 
     -- Applying editor function to all tables
@@ -52,13 +54,13 @@ function FilterKeyed(source, predicate)
     return filtered
 end
 
--- Executes the `reducer` callback function on each element of the table, 
--- in order, passing in the return value from the calculation on the preceding element. 
+-- Executes the `reducer` callback function on each element of the table,
+-- in order, passing in the return value from the calculation on the preceding element.
 -- The final result of running the reducer across all elements of the array is a single value.
 --
 -- If `initial` is provided, it will be used as the initial value of the accumulator.
 -- Otherwise `initial` is assumed to be `source[1]`.
-function Reduce(source, reducer, initial)
+function mod.Reduce(source, reducer, initial)
     local sourceCopy = table.Copy(source)
 
     if initial == nil and #sourceCopy == 0 then
@@ -79,12 +81,12 @@ function Reduce(source, reducer, initial)
 end
 
 -- Returns the sum of all values in the table.
-function Sum(source)
-    return Reduce(source, function(a, b) return a + b end, 0)
+function mod.Sum(source)
+    return mod.Reduce(source, function(a, b) return a + b end, 0)
 end
 
 -- Returns true if any value in the table matches the given predicate.
-function Any(source, predicate)
+function mod.Any(source, predicate)
     if predicate == nil then
         predicate = function(x) return tobool(x) end
     end
@@ -98,12 +100,12 @@ function Any(source, predicate)
     return false
 end
 
-function None(source, predicate)
-    return not Any(source, predicate)
+function mod.None(source, predicate)
+    return not mod.Any(source, predicate)
 end
 
 -- Returns true if all values in the table matches the given predicate.
-function All(source, predicate)
+function mod.All(source, predicate)
     if predicate == nil then
         predicate = function(x) return tobool(x) end
     end
@@ -117,7 +119,7 @@ function All(source, predicate)
     return true
 end
 
-function Count(source, predicate)
+function mod.Count(source, predicate)
     if predicate == nil then
         predicate = function(x) return tobool(x) end
     end
@@ -132,16 +134,16 @@ function Count(source, predicate)
     return count
 end
 
-function One(source, predicate)
-    return Count(source, predicate) == 1
+function mod.One(source, predicate)
+    return mod.Count(source, predicate) == 1
 end
 
-function Few(source, predicate)
-    return Count(source, predicate) > 1
+function mod.Few(source, predicate)
+    return mod.Count(source, predicate) > 1
 end
 
 -- Given a table of tables, returns a new table with all the elements of the provided tables.
-function Flatten(source)
+function mod.Flatten(source)
     local flattened = {}
 
     for _, v in ipairs(source) do
@@ -157,10 +159,10 @@ function Flatten(source)
     return flattened
 end
 
-function Zip(tables)   -- TODO: Support for different lenghts
+function mod.Zip(tables)   -- TODO: Support for different lenghts
     if #tables == 1 then return tables[1] end
 
-    if not All(tables, function(x) return table.IsSequential(x) end) then error 'some tables are not sequential' end
+    if not mod.All(tables, function(x) return table.IsSequential(x) end) then error 'some tables are not sequential' end
 
     local zip = {}
 
@@ -175,7 +177,7 @@ function Zip(tables)   -- TODO: Support for different lenghts
     return zip
 end
 
-function Try(try, catch, finally)
+function mod.Try(try, catch, finally)
     if istable(try) then
         try, catch, finally = try[1], try.catch, try.finally
     end
@@ -186,14 +188,16 @@ function Try(try, catch, finally)
 end
 
 -- TODO: Keys
-function Max(source)
+function mod.Max(source)
     local sorted = table.Copy(source)
     table.sort(sorted)
     return sorted[#sorted]
 end
 
-function Min(source)
+function mod.Min(source)
     local sorted = table.Copy(source)
     table.sort(sorted)
     return sorted[1]
 end
+
+return mod

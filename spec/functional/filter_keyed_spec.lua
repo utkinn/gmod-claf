@@ -1,10 +1,10 @@
 require 'spec/gmod_polyfills'
-require 'lua/claf/functional'
+local FilterKeyed = require('claf/functional').FilterKeyed
 
 describe('FilterKeyed', function()
     it('filters a table with a predicate', function()
         local inp = { a = 'hi', b = 'world' }
-        local result = FilterKeyed(inp, function(k, v) return v == 'hi' end)
+        local result = FilterKeyed(inp, function(_, v) return v == 'hi' end)
         assert.are.same({ a = 'hi' }, result)
     end)
 

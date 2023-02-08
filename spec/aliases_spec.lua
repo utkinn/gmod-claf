@@ -7,7 +7,7 @@ end
 
 _G['FindMetaTable'] = FindMetaTable
 
-require 'lua/claf/aliases'
+require 'claf/aliases'
 
 describe('Entity method aliases', function()
     it('GetHealth() == Health()', function()
@@ -23,7 +23,7 @@ describe('Player method aliases', function()
         playerMetatable.Alive = function() return true end
         assert.are.equal(true, playerMetatable:IsAlive())
     end)
-    
+
     it('GetArmor() == Armor()', function()
         local playerMetatable = FindMetaTable('Player')
         playerMetatable.Armor = function() return 100 end
@@ -31,7 +31,7 @@ describe('Player method aliases', function()
     end)
 end)
 
-it('Run()', function() 
+it('Run()', function()
     stub(_G, 'RunString')
     Run('__x = 1')
     assert.stub(RunString).was.called_with('__x = 1')

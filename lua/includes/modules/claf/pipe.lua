@@ -1,4 +1,4 @@
-local pipeClass = {}
+local mod = {}
 
 local function pipeIndex(self, funcName)
     return function(_self, ...)
@@ -18,14 +18,16 @@ local function pipeIndex(self, funcName)
     end
 end
 
-function Pipe(source)
+function mod.Pipe(source)
     return setmetatable(
-        { value = source, ToTable = function(self) return self.value end }, 
-        { 
-            __index = pipeIndex, 
+        { value = source, ToTable = function(self) return self.value end },
+        {
+            __index = pipeIndex,
             __tostring = function(self)
                 return 'PipeObj with ' .. tostring(self.value)
             end
         }
     )
 end
+
+return mod

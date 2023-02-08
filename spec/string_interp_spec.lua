@@ -1,7 +1,8 @@
-require 'lua/claf/fmt'
+local fmt = require('claf/fmt').fmt
 
 describe('fmt""', function()
     it('replaces patterns like {var} with variable values', function()
+        -- luacheck: no unused
         local var = '{value}'
         local null = nil
         assert.equal('{value} nil', fmt'{var} {null}')
@@ -20,6 +21,7 @@ describe('fmt""', function()
     end)
 
     describe('supports table access syntax in substitution patterns', function()
+        -- luacheck: no unused
         it('(1 level)', function()
             local tbl = { a = 1 }
             local str = fmt'-{tbl.a}-'

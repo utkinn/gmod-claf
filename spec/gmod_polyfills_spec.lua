@@ -113,8 +113,18 @@ describe('table.IsSequential', function()
     it('returns true if the passed table is sequential', function()
         assert.True(table.IsSequential({ 1, 2, 3 }))
     end)
-    
+
     it('returns false if the passed table is sequential', function()
         assert.False(table.IsSequential({ a = 1, b = 2, c = 3 }))
+    end)
+end)
+
+describe('table.Merge', function()
+    it('merges two tables', function()
+        local tbl1 = { a = 1, b = 2 }
+        local tbl2 = { c = 3, d = 4 }
+        local merged = table.Merge(tbl1, tbl2)
+        assert.are.same({ a = 1, b = 2, c = 3, d = 4 }, merged)
+        assert.are.equal(tbl1, merged)
     end)
 end)

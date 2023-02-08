@@ -1,5 +1,5 @@
 require 'spec/gmod_polyfills'
-require 'lua/claf/functional'
+local Sum = require('claf/functional').Sum
 
 describe('Sum', function()
     it("returns table's sum", function()

@@ -1,40 +1,40 @@
 require 'spec/gmod_polyfills'
-require 'lua/claf/assertions'
+local a = require('claf/assertions')
 
 describe('assertions', function()
     it('assertNot()', function()
-        assertNot(false)
+        a.assertNot(false)
     end)
 
     it('assertNotNil()', function()
-        assertNotNil(1)
+        a.assertNotNil(1)
     end)
 
     it('assertNil()', function()
-        assertNil(nil)
+        a.assertNil(nil)
     end)
 
     describe('assertNoError()', function()
         it('works as expected if a function is passed', function()
-            assertNoError(function()
+            a.assertNoError(function()
                 return 1
             end)
         end)
 
         it('throws an error if something other than a function is passed', function()
-            assert.has_error(function() assertNoError(1) end, '"func" must be a function')
+            assert.has_error(function() a.assertNoError(1) end, '"func" must be a function')
         end)
     end)
 
     describe('assertError()', function()
         it('works as expected if a function is passed', function()
-            assertError(function()
+            a.assertError(function()
                 error()
             end)
         end)
 
         it('throws an error if something other than a function is passed', function()
-            assert.has_error(function() assertError(1) end, '"func" must be a function')
+            assert.has_error(function() a.assertError(1) end, '"func" must be a function')
         end)
     end)
 end)

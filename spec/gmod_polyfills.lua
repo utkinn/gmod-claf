@@ -27,7 +27,7 @@ function string.Explode(sep, str)
     return result
 end
 
-bit = bit32
+bit = bit32  -- luacheck: globals bit32
 
 function table.Copy(t)
     local copy = {}
@@ -53,11 +53,26 @@ end
 
 function table.IsSequential(t)
 	local i = 1
-	for key, value in pairs(t) do
+	for _, _ in pairs(t) do
 		if t[i] == nil then
             return false
         end
 		i = i + 1
 	end
 	return true
+end
+
+function table.Merge(dest, source)
+    for k, v in pairs(source) do
+        if istable(v) then
+            if istable(dest[k]) then
+                table.Merge(dest[k], source[k])
+            else
+                dest[k] = table.Copy(v)
+            end
+        else
+            dest[k] = v
+        end
+    end
+    return dest
 end

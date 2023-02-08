@@ -1,5 +1,5 @@
 require 'spec/gmod_polyfills'
-require 'lua/claf/functional'
+local Zip = require('claf/functional').Zip
 
 describe('Zip', function()
     it('zips multiple tables of equal lenghts', function()

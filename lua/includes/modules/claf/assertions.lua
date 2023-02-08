@@ -1,25 +1,29 @@
 -- Functions handy for unit testing.
 
-function assertNot(any)
+local mod = {}
+
+function mod.assertNot(any)
     assert(not any)
 end
 
-function assertNotNil(any)
+function mod.assertNotNil(any)
     assert(any ~= nil)
 end
 
-function assertNil(any)
+function mod.assertNil(any)
     assert(any == nil)
 end
 
-function assertNoError(func)
+function mod.assertNoError(func)
     if not isfunction(func) then error '"func" must be a function' end
     local noErrors = pcall(func)
     assert(noErrors)
 end
 
-function assertError(func)
+function mod.assertError(func)
     if not isfunction(func) then error '"func" must be a function' end
     local noErrors = pcall(func)
-    assertNot(noErrors)
+    mod.assertNot(noErrors)
 end
+
+return mod

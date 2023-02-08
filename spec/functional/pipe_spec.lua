@@ -1,6 +1,9 @@
 require 'spec/gmod_polyfills'
-require 'lua/claf/functional'
-require 'lua/claf/pipe'
+local f = require('claf/functional')
+local Pipe = require('claf/pipe').Pipe
+
+-- TODO: Make Pipe() accept a second argument with table of methods that can be used
+table.Merge(_G, f)
 
 describe('Pipe', function()
     it('returns a transformed table if ToTable is called in the chain end', function()
@@ -15,7 +18,7 @@ describe('Pipe', function()
 
         assert.are.same({ 1, 2, 3, 4 }, result)
     end)
-    
+
     it('returns an aggregate result if the last method in the chain returns a non-table value', function()
         local inp = {
             { { x = 1 }, { x = 2 } },

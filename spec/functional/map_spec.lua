@@ -1,5 +1,5 @@
 require 'spec/gmod_polyfills'
-require 'lua/claf/functional'
+local Map = require('claf/functional').Map
 
 describe('Map', function()
     it('should map a function over a list', function()

@@ -1,5 +1,5 @@
 require 'spec/gmod_polyfills'
-require 'lua/claf/functional'
+local Try = require('claf/functional').Try
 
 describe('Try', function()
     it('executes the "catch" function on error in the "try" function', function()

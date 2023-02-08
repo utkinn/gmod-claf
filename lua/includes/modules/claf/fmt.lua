@@ -1,14 +1,17 @@
+local mod = {}
+
 local f_deprecation_warns = 0
 -- Deprecated
-function f(str)
+function mod.f(str)
     if f_deprecation_warns < 10 then
         MsgC(Color(255, 255, 0), '[CLAF] f() is deprecated. Use fmt() instead.')
         f_deprecation_warns = f_deprecation_warns + 1
     end
-    return fmt(str)
+    return mod.fmt(str)
 end
 
-function fmt(str)
+-- TODO: refactor
+function mod.fmt(str)
     -- ESCAPE_PLACEHOLDER_* are NOT empty. They actually contain "object replacement characters" (U+FFFC).
     -- "{{" is replaced with one symbol, "}}" is replaced with two symbols.
     -- U+FFFC was chosen because it wouldn't be used by anyone very likely.
@@ -39,29 +42,29 @@ function fmt(str)
 
     for _, varName in pairs(variableNames) do
         local varNameWithoutBraces = string.sub(varName, 2, -2)
-        local value
+        local value2
         if string.match(varNameWithoutBraces, '%.') then
             local varNameParts = string.Explode('.', varNameWithoutBraces)
             if locals[varNameParts[1]] ~= nil then
-                value = locals[varNameParts[1]]
+                value2 = locals[varNameParts[1]]
             else
-                value = _G[varNameParts[1]]
+                value2 = _G[varNameParts[1]]
             end
             table.remove(varNameParts, 1)
             for _, part in pairs(varNameParts) do
-                value = value[part]
+                value2 = value2[part]
             end
         elseif locals[varNameWithoutBraces] ~= nil then
-            value = locals[varNameWithoutBraces]
+            value2 = locals[varNameWithoutBraces]
         else
-            value = _G[varNameWithoutBraces]
+            value2 = _G[varNameWithoutBraces]
         end
 
         -- Textual representation for nil
-        if value == nil then
-            value = 'nil'
+        if value2 == nil then
+            value2 = 'nil'
         end
-        str = string.Replace(str, varName, value)
+        str = string.Replace(str, varName, value2)
     end
 
     -- Restoring escaped brackets
@@ -70,3 +73,5 @@ function fmt(str)
 
     return str
 end
+
+return mod

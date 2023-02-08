@@ -1,5 +1,5 @@
 require 'spec/gmod_polyfills'
-require 'lua/claf/functional'
+local Filter = require('claf/functional').Filter
 
 describe('Filter', function()
     it('filters a table with a predicate', function()

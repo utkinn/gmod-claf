@@ -1,10 +1,12 @@
 -- Some utility functions.
 
+local mod = {}
+
 -- Free ID for automatic hook name.
 local CLAF_hookAutoNameID = 1
 
 -- Always creates an error 'not implemented'.
-function TODO(reason)
+function mod.TODO(reason)
     if reason ~= nil then
         error('not implemented: '..reason)
     else
@@ -13,12 +15,12 @@ function TODO(reason)
 end
 
 -- Throws an error if the passed argument is nil.
-function ErrorIfNil(any)
+function mod.ErrorIfNil(any)
     if any == nil then error 'nil is not allowed here' end
 end
 
 -- Quick hook creation function.
-function Hook(event, callback, ID)
+function mod.Hook(event, callback, ID)
     if ID == nil then
         ID = 'CLAFHook_'..CLAF_hookAutoNameID
         CLAF_hookAutoNameID = CLAF_hookAutoNameID + 1
@@ -28,7 +30,7 @@ function Hook(event, callback, ID)
 end
 
 -- Sends a quick net message to the opposite side.
-function Signal(networkString, receiver)
+function mod.Signal(networkString, receiver)
     if SERVER then
         ErrorIfNil(receiver)
         net.Start(networkString)
@@ -73,11 +75,13 @@ else
 end
 
 -- Returns true if x is even, false otherwise.
-function IsEven(x)
+function mod.IsEven(x)
     return x % 2 == 0
 end
 
 -- Returns true if x is odd, false otherwise.
-function IsOdd(x)
+function mod.IsOdd(x)
     return x % 2 ~= 0
 end
+
+return mod

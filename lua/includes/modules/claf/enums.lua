@@ -1,8 +1,10 @@
+local mod = {}
+
 local function checkName(name)
     if #name == 0 then
         error 'empty enum constant'
     end
-    
+
     local numbers = { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' }
     for i = 1, #numbers do
         if string.StartWith(name, numbers[i]) then
@@ -22,7 +24,7 @@ local function checkName(name)
 end
 
 -- Creates an enum.
-function Enum(constants)
+function mod.Enum(constants)
     if not istable(constants) then error '"constants" must be a table of strings' end
     local enum = {}
 
@@ -38,7 +40,7 @@ function Enum(constants)
 end
 
 -- Creates a flag set.
-function Flags(constants)
+function mod.Flags(constants)
     if not istable(constants) then error '"constants" must be a table of strings' end
     local flagSet = {}
 
@@ -52,3 +54,5 @@ function Flags(constants)
 
     return flagSet
 end
+
+return mod

@@ -2,10 +2,10 @@
 --     include 'claf.lua'
 -- to the beginning of the file.
 
-include 'claf/aliases.lua'
-include 'claf/enums.lua'
-include 'claf/lib.lua'
-include 'claf/fmt.lua'
-include 'claf/functional.lua'
-include 'claf/pipe.lua'
-include 'claf/assertions.lua'
+table.Merge(_G, require('claf.aliases'))
+table.Merge(_G, require('claf.enums'))
+table.Merge(_G, require('claf.lib'))
+table.Merge(_G, require('claf.fmt'))
+table.Merge(_G, require('claf.functional'))
+table.Merge(_G, require('claf.pipe'))
+table.Merge(_G, require('claf.assertions'))

@@ -1,5 +1,5 @@
 require 'spec/gmod_polyfills'
-require 'lua/claf/functional'
+local Count = require('claf/functional').Count
 
 describe('Count', function()
     it('returns the number of elements matching the predicate', function()
