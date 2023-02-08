@@ -240,4 +240,42 @@ function mod.TakeRightWhile(source, predicate)
     return table.Reverse(taken)
 end
 
+function mod.Drop(source, n)
+    local dropped = {}
+    for i = n + 1, #source do
+        table.insert(dropped, source[i])
+    end
+    return dropped
+end
+
+function mod.DropRight(source, n)
+    local dropped = {}
+    for i = 1, #source - n do
+        table.insert(dropped, source[i])
+    end
+    return dropped
+end
+
+function mod.DropWhile(source, predicate)
+    local result = {}
+    for i = 1, #source do
+        if not predicate(source[i]) then
+            table.insert(result, source[i])
+        end
+    end
+    return result
+end
+
+function mod.DropRightWhile(source, predicate)
+    local result = table.Copy(source)
+    for i = #result, 1, -1 do
+        if predicate(result[i]) then
+            result[i] = nil
+        else
+            break
+        end
+    end
+    return result
+end
+
 return mod
