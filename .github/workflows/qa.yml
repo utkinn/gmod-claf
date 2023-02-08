@@ -13,8 +13,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install LuaRocks
-        run: sudo apt update && sudo apt install luarocks
+      - name: Install Lua 5.2 and LuaRocks
+        run: sudo apt update && sudo apt install lua5.2 liblua5.2-dev luarocks
 
       - name: Install dependencies
         run: sudo luarocks install claf-1.0.0-1.rockspec
