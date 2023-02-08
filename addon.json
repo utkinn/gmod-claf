@@ -3,6 +3,7 @@
   "type": "tool",
   "ignore": [
       ".git/*",
+      ".github/*",
       "logos/*",
       "README.md",
       "LICENSE",
