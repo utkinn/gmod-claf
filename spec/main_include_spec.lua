@@ -8,7 +8,16 @@ local function getLsCommand(path)
     return detectOs() == "unix" and 'ls -A "'..path..'"' or 'dir "'..path..'" /b /ad'
 end
 
+local function ensureLua52OrGreater()
+    local major, minor = _VERSION:match('Lua (%d+)%.(%d+)')
+    assert(tonumber(major) >= 5 and tonumber(minor) >= 2, 'Lua 5.2 or greater is required to run this test')
+end
+
 local function listDir(path)
+    -- Lua 5.1's file:close() does not return the exit code of the command,
+    -- so we can't check if the command failed.
+    ensureLua52OrGreater()
+
     local i = 0
     local t = {}
     local pfile = io.popen(getLsCommand(path))
@@ -17,8 +26,9 @@ local function listDir(path)
         i = i + 1
         t[i] = filename
     end
-    
-    pfile:close()
+
+    local _, _, exitCode = pfile:close()
+    assert(exitCode == 0, 'Failed to list directory: ' .. path)
     return t
 end
 
@@ -32,9 +42,9 @@ describe('claf.lua', function()
 
         assert.is_function(_G.All)
 
-        local clafModules = listDir('lua/includes/modules/claf')
+        local clafModules = listDir('lua/claf')
         for _, mod in ipairs(clafModules) do
-            assert.spy(includeSpy).was.called_with('includes/modules/claf/' .. mod)
+            assert.spy(includeSpy).was.called_with('claf/' .. mod)
         end
     end)
 end)
