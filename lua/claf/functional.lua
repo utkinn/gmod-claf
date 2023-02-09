@@ -300,4 +300,13 @@ end
 
 mod.Reversed = table.Reverse
 
+function mod.Includes(source, x)
+    for _, v in ipairs(source) do
+        if v == x then
+            return true
+        end
+    end
+    return false
+end
+
 return mod
