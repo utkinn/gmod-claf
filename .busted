@@ -1,5 +1,6 @@
 return {
     default = {
-        lpath = 'lua/includes/modules/?.lua'
+        lpath = 'lua/?.lua',
+        lua = 'lua5.2',
     }
 }
