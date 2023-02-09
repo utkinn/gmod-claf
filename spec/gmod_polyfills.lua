@@ -84,3 +84,7 @@ function table.Merge(dest, source)
     end
     return dest
 end
+
+function include(f)
+    return dofile('lua/' .. f)
+end

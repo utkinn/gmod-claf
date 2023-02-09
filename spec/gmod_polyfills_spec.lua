@@ -137,3 +137,11 @@ describe('table.Merge', function()
         assert.are.equal(tbl1, merged)
     end)
 end)
+
+insulate('include', function()
+    it('runs Lua code in the given file', function()
+        _G.dofile = function(x) return x end
+        local fileResult = include('test/file.lua')
+        assert.are.equal('lua/test/file.lua', fileResult)
+    end)
+end)
