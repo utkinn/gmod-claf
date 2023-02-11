@@ -93,9 +93,44 @@ include 'claf.lua'
 Add dependency of [CLAF Steam Workshop addon](http://steamcommunity.com/sharedfiles/filedetails/?id=1302107512) on your addon.
 Alternatively, you can copy the library files into your addon, but don't forget to include a license notice (see [LICENSE](LICENSE)).
 
-# Running tests
+# Setting up for development
 
-1. Install [LuaRocks](https://luarocks.org/)
-2. Install [busted](https://olivinelabs.com/busted/) (and optionally [luacov](https://github.com/lunarmodules/luacov)
-3. Run `busted` in the root directory of the project.   
-   If you want to run tests with coverage, run `busted -c` instead. After that, run `luacov` to generate an HTML report. If this fails, you can temporarily remove `.luacov` file and run `luacov` to generate a text-formatted report.
+1. Install [WSL](https://learn.microsoft.com/en-us/windows/wsl/) or [MinGW](https://www.mingw-w64.org/), because running Lua natively on Windows is sort of a nightmare.
+2. Install Lua.
+
+   For WSL (assuming you have Ubuntu chosen as your WSL distribution):
+   ```sh
+   sudo apt install lua5.2
+   ```
+
+   For MinGW:
+   ```sh
+   pacman -S mingw-w64-x86_64-lua
+   ```
+
+3. Clone the repository.
+4. Install [LuaRocks](https://luarocks.org/).
+
+   For WSL (assuming you have Ubuntu chosen as your WSL distribution):
+   ```sh
+   sudo apt install luarocks
+   ```
+
+   For MinGW:
+   ```sh
+   pacman -S mingw-w64-lua-luarocks
+   ```
+
+5. Run `lua maint.lua prepare-dev` in the root directory of the project. This will install development dependencies such as tools for formatting, testing and linting the code.
+
+# `maint.lua`
+`maint.lua` is a script that helps with the development of the library. It can be used to run tests, format the code, etc.  
+It can be invoked by running `lua maint.lua <command>` in the root directory of the project, where `<command>` is one of the following:
+
+* `prepare-dev` - installs development dependencies.
+* `test` - runs tests.
+* `cover` - runs tests and generates a coverage report.
+* `lint` - runs linter.
+* `format` - formats the code.
+* `format-check` - checks if the code is formatted correctly.
+* `ci` - runs all the checks that are run on the CI server. If the command fails, it means that the code is not ready to be committed.
