@@ -4,7 +4,9 @@ local tasks = {
     test = "busted",
     cover = { "rm -f luacov.*", "busted -c", "luacov" },
     lint = "luacheck .",
-    ci = { children = { "test", "lint" } }
+    format = "lua-format",
+    ['format-check'] = "lua-format --check maint.lua **/*.lua",
+    ci = { children = { "format-check", "test", "lint" } }
 }
 
 local statusCodes = {}
