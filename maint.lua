@@ -1,14 +1,8 @@
 #!/usr/bin/env lua
 
-local function detectOs()
-    return package.config:sub(1, 1) == "\\" and "win" or "unix"
-end
-
-local rmF = detectOs() == "win" and "del /q" or "rm -f"
-
 local tasks = {
     test = "busted",
-    cover = { rmF .. " luacov.*", "busted -c", "luacov" },
+    cover = { "rm -f luacov.*", "busted -c", "luacov" },
     lint = "luacheck .",
     ci = { children = { "test", "lint" } }
 }
