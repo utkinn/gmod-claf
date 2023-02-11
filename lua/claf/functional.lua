@@ -24,11 +24,7 @@ end
 -- Filters the provided tables.
 function mod.Filter(source, predicate)
     local filtered = {}
-    if predicate == nil then
-        predicate = function(x)
-            return tobool(x)
-        end
-    end
+    predicate = predicate or tobool
 
     -- Applying editor function to all tables
     for _, v in ipairs(source) do -- Iterating through keys and values
@@ -43,10 +39,8 @@ end
 -- Filters the provided keyed (non-sequential) tables.
 function mod.FilterKeyed(source, predicate)
     local filtered = {}
-    if predicate == nil then
-        predicate = function(_, v)
-            return tobool(v)
-        end
+    predicate = predicate or function(_, v)
+        return tobool(v)
     end
 
     -- Applying editor function to all tables
@@ -94,11 +88,7 @@ end
 
 -- Returns true if any value in the table matches the given predicate.
 function mod.Any(source, predicate)
-    if predicate == nil then
-        predicate = function(x)
-            return tobool(x)
-        end
-    end
+    predicate = predicate or tobool
 
     for _, v in pairs(source) do
         if predicate(v) then
@@ -115,11 +105,7 @@ end
 
 -- Returns true if all values in the table matches the given predicate.
 function mod.All(source, predicate)
-    if predicate == nil then
-        predicate = function(x)
-            return tobool(x)
-        end
-    end
+    predicate = predicate or tobool
 
     for _, v in pairs(source) do
         if not predicate(v) then
@@ -131,11 +117,7 @@ function mod.All(source, predicate)
 end
 
 function mod.Count(source, predicate)
-    if predicate == nil then
-        predicate = function(x)
-            return tobool(x)
-        end
-    end
+    predicate = predicate or tobool
 
     local count = 0
     for _, v in pairs(source) do
@@ -177,9 +159,7 @@ function mod.Zip(tables) -- TODO: Support for different lenghts
         return tables[1]
     end
 
-    if not mod.All(tables, function(x)
-        return table.IsSequential(x)
-    end) then
+    if not mod.All(tables, table.IsSequential) then
         error "some tables are not sequential"
     end
 
