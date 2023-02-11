@@ -1,5 +1,5 @@
-require 'spec/gmod_polyfills'
-local Reversed = require('claf.functional').Reversed
+require "spec/gmod_polyfills"
+local Reversed = require("claf.functional").Reversed
 
 describe("Reversed", function()
     it("returns a reversed copy of the given table", function()

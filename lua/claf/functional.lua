@@ -1,5 +1,4 @@
 -- Means of functional programming.
-
 local mod = {}
 
 -- Applies "editor" function to all elements of the provided table.
@@ -9,7 +8,9 @@ function mod.Map(source, editor)
 
     if isstring(editor) then
         local key = editor
-        editor = function(x) return x[key] end
+        editor = function(x)
+            return x[key]
+        end
     end
 
     -- Applying editor function to all tables
@@ -24,7 +25,9 @@ end
 function mod.Filter(source, predicate)
     local filtered = {}
     if predicate == nil then
-        predicate = function(x) return tobool(x) end
+        predicate = function(x)
+            return tobool(x)
+        end
     end
 
     -- Applying editor function to all tables
@@ -41,7 +44,9 @@ end
 function mod.FilterKeyed(source, predicate)
     local filtered = {}
     if predicate == nil then
-        predicate = function(_, v) return tobool(v) end
+        predicate = function(_, v)
+            return tobool(v)
+        end
     end
 
     -- Applying editor function to all tables
@@ -82,13 +87,17 @@ end
 
 -- Returns the sum of all values in the table.
 function mod.Sum(source)
-    return mod.Reduce(source, function(a, b) return a + b end, 0)
+    return mod.Reduce(source, function(a, b)
+        return a + b
+    end, 0)
 end
 
 -- Returns true if any value in the table matches the given predicate.
 function mod.Any(source, predicate)
     if predicate == nil then
-        predicate = function(x) return tobool(x) end
+        predicate = function(x)
+            return tobool(x)
+        end
     end
 
     for _, v in pairs(source) do
@@ -107,7 +116,9 @@ end
 -- Returns true if all values in the table matches the given predicate.
 function mod.All(source, predicate)
     if predicate == nil then
-        predicate = function(x) return tobool(x) end
+        predicate = function(x)
+            return tobool(x)
+        end
     end
 
     for _, v in pairs(source) do
@@ -121,7 +132,9 @@ end
 
 function mod.Count(source, predicate)
     if predicate == nil then
-        predicate = function(x) return tobool(x) end
+        predicate = function(x)
+            return tobool(x)
+        end
     end
 
     local count = 0
@@ -159,10 +172,16 @@ function mod.Flatten(source)
     return flattened
 end
 
-function mod.Zip(tables)   -- TODO: Support for different lenghts
-    if #tables == 1 then return tables[1] end
+function mod.Zip(tables) -- TODO: Support for different lenghts
+    if #tables == 1 then
+        return tables[1]
+    end
 
-    if not mod.All(tables, function(x) return table.IsSequential(x) end) then error 'some tables are not sequential' end
+    if not mod.All(tables, function(x)
+        return table.IsSequential(x)
+    end) then
+        error "some tables are not sequential"
+    end
 
     local zip = {}
 
@@ -183,8 +202,12 @@ function mod.Try(try, catch, finally)
     end
 
     local noErrors, message = pcall(try)
-    if catch ~= nil and not noErrors then catch(message) end
-    if finally ~= nil then finally() end
+    if catch ~= nil and not noErrors then
+        catch(message)
+    end
+    if finally ~= nil then
+        finally()
+    end
 end
 
 -- TODO: Keys

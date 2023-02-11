@@ -1,36 +1,36 @@
-local fmt = require('claf/fmt').fmt
+local fmt = require("claf/fmt").fmt
 
-describe('fmt""', function()
-    it('replaces patterns like {var} with variable values', function()
+describe("fmt\"\"", function()
+    it("replaces patterns like {var} with variable values", function()
         -- luacheck: no unused
-        local var = '{value}'
+        local var = "{value}"
         local null = nil
-        assert.equal('{value} nil', fmt'{var} {null}')
+        assert.equal("{value} nil", fmt "{var} {null}")
     end)
 
-    it('ignores strings without substitution patterns', function()
-        assert.equal('no substitution', fmt'no substitution')
+    it("ignores strings without substitution patterns", function()
+        assert.equal("no substitution", fmt "no substitution")
     end)
 
-    it('inserts "nil" in place of invalid substitution patterns', function()
-        assert.equal('nil', fmt'{!!!}')
+    it("inserts \"nil\" in place of invalid substitution patterns", function()
+        assert.equal("nil", fmt "{!!!}")
     end)
 
-    it('does not substitute patterns like {{this}}', function()
-        assert.equal('{a}', fmt'{{a}}')
+    it("does not substitute patterns like {{this}}", function()
+        assert.equal("{a}", fmt "{{a}}")
     end)
 
-    describe('supports table access syntax in substitution patterns', function()
+    describe("supports table access syntax in substitution patterns", function()
         -- luacheck: no unused
-        it('(1 level)', function()
+        it("(1 level)", function()
             local tbl = { a = 1 }
-            local str = fmt'-{tbl.a}-'
-            assert.are.equal('-1-', str)
+            local str = fmt "-{tbl.a}-"
+            assert.are.equal("-1-", str)
         end)
-        it('(3 levels)', function()
+        it("(3 levels)", function()
             local tbl = { a = { b = { c = 1 } } }
-            local str = fmt'{tbl.a.b.c}'
-            assert.are.equal('1', str)
+            local str = fmt "{tbl.a.b.c}"
+            assert.are.equal("1", str)
         end)
     end)
 end)

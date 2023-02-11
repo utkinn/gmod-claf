@@ -1,0 +1,4 @@
+spaces_inside_table_braces: true
+keep_simple_control_block_one_line: false
+keep_simple_function_one_line: false
+single_quote_to_double_quote: true

@@ -1,4 +1,4 @@
-local Last = require('claf.functional').Last
+local Last = require("claf.functional").Last
 
 describe("Last", function()
     it("returns the Last element of a table", function()

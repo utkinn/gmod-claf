@@ -1,33 +1,33 @@
 #!/usr/bin/env lua
 
+local filesToFormat =
+    "maint.lua .luacheckrc .busted .luacov claf-1.0.0-1.rockspec"
+
 local tasks = {
-    ['prepare-dev'] = "luarocks --lua-version 5.2 --server https://luarocks.org/dev install --local claf-1.0.0-1.rockspec",
+    ["prepare-dev"] = "luarocks --lua-version 5.2 --server https://luarocks.org/dev" ..
+        "install --local claf-1.0.0-1.rockspec",
     test = "busted",
     cover = { "rm -f luacov.*", "busted -c", "luacov" },
     lint = "luacheck .",
-    format = "lua-format",
-    ['format-check'] = "lua-format --check maint.lua **/*.lua",
+    format = "find . -wholename '**/*.lua' | xargs lua-format -i " ..
+        filesToFormat,
+    ["format-check"] = "find . -wholename '**/*.lua' | xargs lua-format --check " ..
+        filesToFormat,
     ci = { children = { "format-check", "test", "lint" } }
 }
 
 local statusCodes = {}
 
-local inverseStart = '\x1b[7m\x1b[1m'
-local resetColors = '\x1b[0C\x1b[0m'
+local inverseStart = "\x1b[7m\x1b[1m"
+local resetColors = "\x1b[0C\x1b[0m"
 
 local function printTaskBanner(taskName)
     local bannerLenght = 60
-    local taskHeading = ' Task "' .. taskName .. '"'
+    local taskHeading = " Task \"" .. taskName .. "\""
     local paddingLenght = bannerLenght - #taskHeading - 1
     print(
-        '\n'
-        .. inverseStart
-        .. taskHeading
-        .. string.rep(' ', paddingLenght)
-        .. '\xc2\xa0'
-        .. resetColors
-        .. '\n'
-    )
+        "\n" .. inverseStart .. taskHeading .. string.rep(" ", paddingLenght) ..
+            "\xc2\xa0" .. resetColors .. "\n")
 end
 
 local function runTask(taskName)
@@ -57,13 +57,14 @@ for _, taskToRun in ipairs(arg) do
     runTask(taskToRun)
 end
 
-local boldRedStart = '\x1b[1;31m'
+local boldRedStart = "\x1b[1;31m"
 
 local fail = false
-print('\n')
+print("\n")
 for cmd, status in pairs(statusCodes) do
     if status ~= 0 then
-        print(boldRedStart .. 'Command "' .. cmd .. '" failed with status ' .. status .. '.' .. resetColors)
+        print(boldRedStart .. "Command \"" .. cmd .. "\" failed with status " ..
+                  status .. "." .. resetColors)
         fail = true
     end
 end

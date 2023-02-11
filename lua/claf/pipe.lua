@@ -4,7 +4,7 @@ local function pipeIndex(self, funcName)
     return function(_, ...)
         local transformFunction = _G[funcName]
         if transformFunction == nil then
-            error('Pipe: ' .. funcName .. ' is not a valid method')
+            error("Pipe: " .. funcName .. " is not a valid method")
         end
 
         local result = transformFunction(self.value, ...)
@@ -19,15 +19,17 @@ local function pipeIndex(self, funcName)
 end
 
 function mod.Pipe(source)
-    return setmetatable(
-        { value = source, ToTable = function(self) return self.value end },
-        {
-            __index = pipeIndex,
-            __tostring = function(self)
-                return 'PipeObj with ' .. tostring(self.value)
-            end
-        }
-    )
+    return setmetatable({
+        value = source,
+        ToTable = function(self)
+            return self.value
+        end
+    }, {
+        __index = pipeIndex,
+        __tostring = function(self)
+            return "PipeObj with " .. tostring(self.value)
+        end
+    })
 end
 
 return mod

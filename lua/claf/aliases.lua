@@ -1,14 +1,13 @@
 -- Aliases for standard functions.
 -- Some standard functions have bad names, so aliases are created for them.
-
-local entityMetaTable = FindMetaTable 'Entity'
+local entityMetaTable = FindMetaTable "Entity"
 
 -- Alias for Entity:Health().
 function entityMetaTable:GetHealth()
     return self:Health()
 end
 
-local playerMetaTable = FindMetaTable 'Player'
+local playerMetaTable = FindMetaTable "Player"
 
 -- Alias for Player:Alive().
 function playerMetaTable:IsAlive()

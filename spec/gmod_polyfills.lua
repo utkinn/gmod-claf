@@ -27,7 +27,7 @@ function string.Explode(sep, str)
     return result
 end
 
-bit = bit32  -- luacheck: globals bit32
+bit = bit32 -- luacheck: globals bit32
 
 function table.Copy(t)
     local copy = {}
@@ -54,20 +54,20 @@ function tobool(x)
         [false] = true,
         ["false"] = true,
         [0] = true,
-        ["0"] = true,
+        ["0"] = true
     }
     return x ~= nil and not falsyValues[x]
 end
 
 function table.IsSequential(t)
-	local i = 1
-	for _, _ in pairs(t) do
-		if t[i] == nil then
+    local i = 1
+    for _, _ in pairs(t) do
+        if t[i] == nil then
             return false
         end
-		i = i + 1
-	end
-	return true
+        i = i + 1
+    end
+    return true
 end
 
 function table.Merge(dest, source)
@@ -86,5 +86,5 @@ function table.Merge(dest, source)
 end
 
 function include(f)
-    return dofile('lua/' .. f)
+    return dofile("lua/" .. f)
 end

@@ -1,5 +1,4 @@
 -- Functions handy for unit testing.
-
 local mod = {}
 
 function mod.assertNot(any)
@@ -15,13 +14,17 @@ function mod.assertNil(any)
 end
 
 function mod.assertNoError(func)
-    if not isfunction(func) then error '"func" must be a function' end
+    if not isfunction(func) then
+        error "\"func\" must be a function"
+    end
     local noErrors = pcall(func)
     assert(noErrors)
 end
 
 function mod.assertError(func)
-    if not isfunction(func) then error '"func" must be a function' end
+    if not isfunction(func) then
+        error "\"func\" must be a function"
+    end
     local noErrors = pcall(func)
     mod.assertNot(noErrors)
 end

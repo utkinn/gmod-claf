@@ -1,4 +1,4 @@
-local Includes = require('claf.functional').Includes
+local Includes = require("claf.functional").Includes
 
 describe("Includes", function()
     it("should return true if the value is in the table", function()

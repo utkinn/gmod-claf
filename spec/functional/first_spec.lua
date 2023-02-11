@@ -1,4 +1,4 @@
-local First = require('claf.functional').First
+local First = require("claf.functional").First
 
 describe("First", function()
     it("returns the first element of a table", function()
