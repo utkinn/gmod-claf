@@ -7,6 +7,7 @@ dependencies = {
     "busted ~> 2",
     "luacov ~> 0.15",
     "luacheck ~> 0.23",
+    "luaformatter"
 }
 source = {
     url = "git://github.com/javabird25/gmod-claf.git",
