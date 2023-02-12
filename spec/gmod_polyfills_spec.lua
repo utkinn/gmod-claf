@@ -145,6 +145,12 @@ describe("table.Merge", function()
     end)
 end)
 
+describe("string.ToTable", function()
+    it("returns a table of characters", function()
+        assert.are.same({ "h", "e", "l", "l", "o" }, string.ToTable("hello"))
+    end)
+end)
+
 insulate("include", function()
     it("runs Lua code in the given file", function()
         _G.dofile = function(x)

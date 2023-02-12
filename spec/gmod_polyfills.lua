@@ -85,6 +85,14 @@ function table.Merge(dest, source)
     return dest
 end
 
+function string.ToTable(str)
+    local t = {}
+    for i = 1, #str do
+        table.insert(t, str:sub(i, i))
+    end
+    return t
+end
+
 function include(f)
     return dofile("lua/" .. f)
 end

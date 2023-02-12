@@ -1,69 +1,60 @@
+local fn = include("claf/functional.lua")
+
 local mod = {}
+
+local numbers = string.ToTable("1234567890")
+local allowedIdentifierSymbols = string.ToTable(
+                                     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_1234567890")
+
+local function isBadIdentifierChar(c)
+    return not fn.Includes(allowedIdentifierSymbols, c)
+end
 
 local function checkName(name)
     if #name == 0 then
-        error "empty enum constant"
+        error "empty identifier"
     end
 
-    local numbers = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0" }
-    for i = 1, #numbers do
-        if string.StartWith(name, numbers[i]) then
-            error "enum constant cannot start with a number"
-        end
+    if fn.Includes(numbers, name:sub(1, 1)) then
+        error "identifier cannot start with a number"
     end
 
-    local allowedSymbols = {
-        "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "q", "w", "e", "r",
-        "t", "y", "u", "i", "o", "p", "a", "s", "d", "f", "g", "h", "j", "k",
-        "l", "z", "x", "c", "v", "b", "n", "m", "_"
-    }
-    for i = 1, #allowedSymbols do
-        name = string.Replace(name, allowedSymbols[i], "")
-        name = string.Replace(name, string.upper(allowedSymbols[i]), "")
-    end
-    if #name ~= 0 then
-        error "bad enum constant"
+    if fn.Any(name:sub(1):ToTable(), isBadIdentifierChar) then
+        error "invalid character in identifier"
     end
 end
 
--- Creates an enum.
-function mod.Enum(constants)
+local function generateEnumOrFlagSet(constants, nextValue)
     if not istable(constants) then
         error "\"constants\" must be a table of strings"
     end
     local enum = {}
 
-    local constantValue = 1
-    for _, constantName in pairs(constants) do
-        checkName(constantName)
-        if not isstring(constantName) then
+    local value = 1
+    for _, name in pairs(constants) do
+        checkName(name)
+        if not isstring(name) then
             error "\"constants\" must be a table of strings"
         end
-        enum[constantName] = constantValue
-        constantValue = constantValue + 1
+        enum[name] = value
+        value = nextValue(value)
     end
 
     return enum
 end
 
+-- Creates an enum.
+function mod.Enum(constants)
+    return generateEnumOrFlagSet(constants, function(value)
+        return value + 1
+    end)
+end
+
 -- Creates a flag set.
 function mod.Flags(constants)
-    if not istable(constants) then
-        error "\"constants\" must be a table of strings"
-    end
-    local flagSet = {}
-
-    local currentFlagValue = 1
-    for _, flagName in pairs(constants) do
-        checkName(flagName)
-        if not isstring(flagName) then
-            error "\"constants\" must be a table of strings"
-        end
-        flagSet[flagName] = currentFlagValue
-        currentFlagValue = currentFlagValue * 2
-    end
-
-    return flagSet
+    return generateEnumOrFlagSet(constants, function(value)
+        return value * 2
+    end)
 end
 
 return mod

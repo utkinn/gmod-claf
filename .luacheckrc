@@ -12,7 +12,7 @@ stds.gmod = {
         "isstring",
         "Color",
         "MsgC",
-        string = { fields = { "Explode", "StartWith", "Replace" } },
+        string = { fields = { "Explode", "StartWith", "Replace", "ToTable" } },
         "net",
         "hook",
         "SERVER",
