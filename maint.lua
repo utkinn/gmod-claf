@@ -4,7 +4,7 @@ local filesToFormat =
     "maint.lua .luacheckrc .busted .luacov claf-1.0.0-1.rockspec"
 
 local tasks = {
-    ["prepare-dev"] = "luarocks --lua-version 5.2 --server https://luarocks.org/dev" ..
+    ["prepare-dev"] = "luarocks --lua-version 5.2 --server https://luarocks.org/dev " ..
         "install --local claf-1.0.0-1.rockspec",
     test = "busted",
     cover = { "rm -f luacov.*", "busted -c", "luacov" },
