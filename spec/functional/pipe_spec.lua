@@ -28,4 +28,13 @@ describe("Pipe", function()
             Pipe({}):InvalidMethod()
         end, "Pipe: InvalidMethod is not a valid method")
     end)
+
+    it(
+        "returns \"PipeObj with \" .. tostring(self.value) if tostring is called",
+        function()
+            local inp = {}
+            local result = tostring(Pipe(inp))
+
+            assert.are.equal("PipeObj with " .. tostring(inp), result)
+        end)
 end)
