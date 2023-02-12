@@ -16,10 +16,10 @@ jobs:
       - name: Install Lua 5.2 and LuaRocks
         run: sudo apt update && sudo apt install lua5.2 liblua5.2-dev luarocks
 
-      - name: Install dependencies
-        run: sudo luarocks install claf-1.0.0-1.rockspec
-
       - run: chmod +x maint.lua
+
+      - name: Install dependencies
+        run: ./maint.lua prepare-dev
 
       - name: Check formatting
         run: ./maint.lua format-check
