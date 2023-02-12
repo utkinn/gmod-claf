@@ -19,7 +19,7 @@ jobs:
       - run: chmod +x maint.lua
 
       - name: Install dependencies
-        run: ./maint.lua prepare-dev
+        run: ./maint.lua prepare-ci
 
       - name: Check formatting
         run: ./maint.lua format-check
