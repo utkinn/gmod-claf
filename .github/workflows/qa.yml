@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [ "master" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "master" ]
+    branches: ["main"]
 
 jobs:
   build:
@@ -18,14 +18,14 @@ jobs:
 
       - name: Install dependencies
         run: sudo luarocks install claf-1.0.0-1.rockspec
-        
+
       - run: chmod +x maint.lua
-        
+
       - name: Check formatting
         run: ./maint.lua format-check
 
       - name: Run tests
         run: ./maint.lua test
-        
+
       - name: Lint
         run: ./maint.lua lint
