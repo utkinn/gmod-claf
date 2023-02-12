@@ -1,4 +1,6 @@
-local fmt = require("claf/fmt").fmt
+local fmtLib = require("claf/fmt")
+local fmt = fmtLib.fmt
+local f = fmtLib.f
 
 describe("fmt\"\"", function()
     it("replaces patterns like {var} with variable values", function()
@@ -32,5 +34,21 @@ describe("fmt\"\"", function()
             local str = fmt "{tbl.a.b.c}"
             assert.are.equal("1", str)
         end)
+    end)
+end)
+
+insulate("f\"\"", function()
+    it("is a deprecated alias for fmt\"\"", function()
+        _G.Color = function(r, g, b)
+            return string.format("Color(%d, %d, %d)", r, g, b)
+        end
+        stub(_G, "MsgC")
+
+        -- luacheck: no unused
+        local var = "{value}"
+        local null = nil
+        assert.equal("{value} nil", f "{var} {null}")
+        assert.stub(_G.MsgC).was.called_with(Color(255, 255, 0),
+                                             "[CLAF] f() is deprecated. Use fmt() instead.")
     end)
 end)
