@@ -28,12 +28,14 @@ function mod.Hook(event, callback, ID)
     end
 
     hook.Add(event, ID, callback)
+
+    -- TODO: return identifier for removal
 end
 
 -- Sends a quick net message to the opposite side.
 function mod.Signal(networkString, receiver)
     if SERVER then
-        ErrorIfNil(receiver)
+        mod.ErrorIfNil(receiver)
         net.Start(networkString)
         net.Send(receiver)
     else
