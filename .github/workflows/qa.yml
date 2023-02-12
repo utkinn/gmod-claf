@@ -21,6 +21,9 @@ jobs:
         
       - run: chmod +x maint.lua
         
+      - name: Check formatting
+        run: ./maint.lua format-check
+
       - name: Run tests
         run: ./maint.lua test
         
