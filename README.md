@@ -125,12 +125,16 @@ Alternatively, you can copy the library files into your addon, but don't forget 
 
 # `maint.lua`
 `maint.lua` is a script that helps with the development of the library. It can be used to run tests, format the code, etc.  
-It can be invoked by running `lua maint.lua <command>` in the root directory of the project, where `<command>` is one of the following:
+It can be invoked by running `lua maint.lua <task>` in the root directory of the project, where `<task>` is one of the following:
 
 * `prepare-dev` - installs development dependencies.
+* `prepare-ci` - used in CI; installs development dependencies globally with sudo. This makes the tools available system-wide.
 * `test` - runs tests.
-* `cover` - runs tests and generates a coverage report.
-* `lint` - runs linter.
-* `format` - formats the code.
-* `format-check` - checks if the code is formatted correctly.
+* `generate-coverage-data` - runs `busted -c` which geneates coverage data in `luacov.stats.out` file. Use 
+  the `cover` task to generate a humar-readable HTML report.
+* `cover` - runs tests and generates a coverage report in HTML format.
+* `check-coverage-percentage` - checks if the coverage percentage is above the threshold. The threshold is defined in `tools/check-coverage-percentage.sh`.
+* `lint` - scans for potential errors in the code.
+* `format` - reformats the code.
+* `format-check` - checks if the code is formatted according to a standard.
 * `ci` - runs all the checks that are run on the CI server. If the command fails, it means that the code is not ready to be committed.
