@@ -9,5 +9,4 @@ local playerMetaTable = FindMetaTable "Player"
 playerMetaTable.IsAlive = playerMetaTable.Alive
 playerMetaTable.GetArmor = playerMetaTable.Armor
 
--- Runs a piece of Lua code.
 Run = RunString

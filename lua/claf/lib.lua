@@ -36,7 +36,7 @@ function mod.Signal(networkString, receiver)
         ErrorIfNil(receiver)
         net.Start(networkString)
         net.Send(receiver)
-    else -- Clientside
+    else
         net.Start(networkString)
         net.SendToServer()
     end

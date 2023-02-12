@@ -13,8 +13,7 @@ function mod.Map(source, editor)
         end
     end
 
-    -- Applying editor function to all tables
-    for k, v in pairs(modified) do -- Iterating through keys and values
+    for k, v in pairs(modified) do
         modified[k] = editor(v)
     end
 
@@ -26,8 +25,7 @@ function mod.Filter(source, predicate)
     local filtered = {}
     predicate = predicate or tobool
 
-    -- Applying editor function to all tables
-    for _, v in ipairs(source) do -- Iterating through keys and values
+    for _, v in ipairs(source) do
         if predicate(v) then
             table.insert(filtered, v)
         end
@@ -43,8 +41,7 @@ function mod.FilterKeyed(source, predicate)
         return tobool(v)
     end
 
-    -- Applying editor function to all tables
-    for k, v in pairs(source) do -- Iterating through keys and values
+    for k, v in pairs(source) do
         if predicate(k, v) then
             filtered[k] = v
         end
