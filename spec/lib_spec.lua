@@ -103,3 +103,75 @@ describe("IsOdd", function()
         assert.False(lib.IsOdd(2))
     end)
 end)
+
+describe("net.QuickMsg", function()
+    insulate("on server", function()
+        setup(function()
+            _G.SERVER = true
+            _G.CLIENT = false
+            include("claf/lib.lua")
+        end)
+
+        describe("sends a message to a recipient", function()
+            local recipient = 1
+
+            before_each(function()
+                stub(net, "Start")
+                stub(net, "Write")
+                stub(net, "Send")
+            end)
+
+            it("with one payload value", function()
+                net.QuickMsg("message", recipient, 1)
+
+                assert.stub(net.Start).was.called_with("message")
+                assert.stub(net.Write).was.called_with(1)
+                assert.stub(net.Send).was.called_with(recipient)
+            end)
+
+            it("with multiple payload values", function()
+                net.QuickMsg("message", recipient, { 1, 2, 3 })
+
+                assert.stub(net.Start).was.called_with("message")
+                assert.stub(net.Write).was.called_with(1)
+                assert.stub(net.Write).was.called_with(2)
+                assert.stub(net.Write).was.called_with(3)
+                assert.stub(net.Send).was.called_with(recipient)
+            end)
+        end)
+    end)
+
+    insulate("on client", function()
+        setup(function()
+            _G.SERVER = false
+            _G.CLIENT = true
+            include("claf/lib.lua")
+        end)
+
+        describe("sends a message to server", function()
+            before_each(function()
+                stub(net, "Start")
+                stub(net, "Write")
+                stub(net, "SendToServer")
+            end)
+
+            it("with one payload value", function()
+                net.QuickMsg("message", 1)
+
+                assert.stub(net.Start).was.called_with("message")
+                assert.stub(net.Write).was.called_with(1)
+                assert.stub(net.SendToServer).was.called()
+            end)
+
+            it("with multiple payload values", function()
+                net.QuickMsg("message", { 1, 2, 3 })
+
+                assert.stub(net.Start).was.called_with("message")
+                assert.stub(net.Write).was.called_with(1)
+                assert.stub(net.Write).was.called_with(2)
+                assert.stub(net.Write).was.called_with(3)
+                assert.stub(net.SendToServer).was.called()
+            end)
+        end)
+    end)
+end)

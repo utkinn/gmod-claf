@@ -55,7 +55,7 @@ net.Read = net.ReadType
 
 if SERVER then
     function net.QuickMsg(networkString, receiver, data)
-        ErrorIfNil(receiver)
+        mod.ErrorIfNil(receiver)
 
         net.Start(networkString)
         if istable(data) then
