@@ -1,15 +1,20 @@
 # CLAF
+
 ![CLAF Logo](logos/logo-250x250.png)
+
 # Library for Garry's Mod addons
 
 CLAF is a set of wrappers and libraries for the standard API which makes the Garry's Mod addons development easier.  
 See [wiki](https://github.com/javabird25/gmod-claf/wiki) for the documentation.
 
 # Why to use?
+
 CLAF provides functional programming, aliases and shortcuts for the standard API to make the addon programming easier.
 
 # Features
+
 ## Functional programming
+
 Quickly modify tables with functional programming features:
 
 ```lua
@@ -42,7 +47,9 @@ assert(result == 10)
 ```
 
 ## Popular language features simulation
+
 ### Try-catch
+
 Run code that can cause errors in `Try()`:
 
 ```lua
@@ -56,6 +63,7 @@ end)
 ```
 
 ### Enums and flags
+
 ```lua
 LiquidType = Enum { 'WATER', 'LAVA', 'OIL' }
 bottle = { liquid = LiquidType.WATER }
@@ -74,7 +82,9 @@ hints = bit.band(userSettings, Settings.SHOW_HINTS) -- false
 ```
 
 ## String interpolation
+
 Easily insert variables' values into strings using the **string interpolation**:
+
 ```lua
 local name = 'John'
 str = fmt'My name is {name}'
@@ -82,14 +92,18 @@ str = fmt'My name is {name}'
 ```
 
 # How to use?
+
 ## While the addon development
+
 1. Subscribe to [CLAF addon in Steam Workshop](http://steamcommunity.com/sharedfiles/filedetails/?id=1302107512).
 2. Add the following line to the beginning of the source files where CLAF is used:
+
 ```lua
 include 'claf.lua'
 ```
 
 ## When it's time to publish
+
 Add dependency of [CLAF Steam Workshop addon](http://steamcommunity.com/sharedfiles/filedetails/?id=1302107512) on your addon.
 Alternatively, you can copy the library files into your addon, but don't forget to include a license notice (see [LICENSE](LICENSE)).
 
@@ -99,11 +113,13 @@ Alternatively, you can copy the library files into your addon, but don't forget 
 2. Install Lua.
 
    For WSL (assuming you have Ubuntu chosen as your WSL distribution):
+
    ```sh
    sudo apt install lua5.2
    ```
 
    For MinGW:
+
    ```sh
    pacman -S mingw-w64-x86_64-lua
    ```
@@ -112,11 +128,13 @@ Alternatively, you can copy the library files into your addon, but don't forget 
 4. Install [LuaRocks](https://luarocks.org/).
 
    For WSL (assuming you have Ubuntu chosen as your WSL distribution):
+
    ```sh
    sudo apt install luarocks
    ```
 
    For MinGW:
+
    ```sh
    pacman -S mingw-w64-lua-luarocks
    ```
@@ -124,17 +142,18 @@ Alternatively, you can copy the library files into your addon, but don't forget 
 5. Run `lua maint.lua prepare-dev` in the root directory of the project. This will install development dependencies such as tools for formatting, testing and linting the code.
 
 # `maint.lua`
+
 `maint.lua` is a script that helps with the development of the library. It can be used to run tests, format the code, etc.  
 It can be invoked by running `lua maint.lua <task>` in the root directory of the project, where `<task>` is one of the following:
 
-* `prepare-dev` - installs development dependencies.
-* `prepare-ci` - used in CI; installs development dependencies globally with sudo. This makes the tools available system-wide.
-* `test` - runs tests.
-* `generate-coverage-data` - runs `busted -c` which geneates coverage data in `luacov.stats.out` file. Use 
+- `prepare-dev` - installs development dependencies.
+- `prepare-ci` - used in CI; installs development dependencies globally with sudo. This makes the tools available system-wide.
+- `test` - runs tests.
+- `generate-coverage-data` - runs `busted -c` which geneates coverage data in `luacov.stats.out` file. Use
   the `cover` task to generate a humar-readable HTML report.
-* `cover` - runs tests and generates a coverage report in HTML format.
-* `check-coverage-percentage` - checks if the coverage percentage is above the threshold. The threshold is defined in `tools/check-coverage-percentage.sh`.
-* `lint` - scans for potential errors in the code.
-* `format` - reformats the code.
-* `format-check` - checks if the code is formatted according to a standard.
-* `ci` - runs all the checks that are run on the CI server. If the command fails, it means that the code is not ready to be committed.
+- `cover` - runs tests and generates a coverage report in HTML format.
+- `check-coverage-percentage` - checks if the coverage percentage is above the threshold. The threshold is defined in `tools/check-coverage-percentage.sh`.
+- `lint` - scans for potential errors in the code.
+- `format` - reformats the code.
+- `format-check` - checks if the code is formatted according to a standard.
+- `ci` - runs all the checks that are run on the CI server. If the command fails, it means that the code is not ready to be committed.
