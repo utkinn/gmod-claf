@@ -2,24 +2,12 @@
 -- Some standard functions have bad names, so aliases are created for them.
 local entityMetaTable = FindMetaTable "Entity"
 
--- Alias for Entity:Health().
-function entityMetaTable:GetHealth()
-    return self:Health()
-end
+entityMetaTable.GetHealth = entityMetaTable.Health
 
 local playerMetaTable = FindMetaTable "Player"
 
--- Alias for Player:Alive().
-function playerMetaTable:IsAlive()
-    return self:Alive()
-end
-
--- Alias for Player:Armor().
-function playerMetaTable:GetArmor()
-    return self:Armor()
-end
+playerMetaTable.IsAlive = playerMetaTable.Alive
+playerMetaTable.GetArmor = playerMetaTable.Armor
 
 -- Runs a piece of Lua code.
-function Run(code)
-    RunString(code)
-end
+Run = RunString

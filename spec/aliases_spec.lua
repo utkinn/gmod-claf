@@ -1,11 +1,27 @@
-local fakeMetatables = {}
+local fakeMetatables = {
+    Entity = {
+        Health = function()
+            return 100
+        end
+    },
+    Player = {
+        Alive = function()
+            return true
+        end,
+        Armor = function()
+            return 100
+        end
+    }
+}
 
 function FindMetaTable(mt)
     fakeMetatables[mt] = fakeMetatables[mt] or {}
     return fakeMetatables[mt]
 end
 
-_G["FindMetaTable"] = FindMetaTable
+_G.FindMetaTable = FindMetaTable
+_G.RunString = function()
+end
 
 require "claf/aliases"
 
@@ -38,7 +54,5 @@ describe("Player method aliases", function()
 end)
 
 it("Run()", function()
-    stub(_G, "RunString")
-    Run("__x = 1")
-    assert.stub(RunString).was.called_with("__x = 1")
+    assert.are.equal(RunString, Run)
 end)
