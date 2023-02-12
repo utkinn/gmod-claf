@@ -9,13 +9,18 @@ local tasks = {
     ["prepare-ci"] = "sudo luarocks --lua-version 5.2 --server https://luarocks.org/dev " ..
         "install claf-1.0.0-1.rockspec",
     test = "busted",
-    cover = { "rm -f luacov.*", "busted -c", "luacov" },
+    ["generate-coverage-data"] = { "rm -f luacov.*", "busted -c" },
+    cover = { children = { "generate-coverage-data" }, "luacov lua" },
+    ["check-coverage-percentage"] = {
+        children = { "generate-coverage-data" },
+        "sh tools/check-coverage-percentage.sh"
+    },
     lint = "luacheck .",
     format = "find . -wholename '**/*.lua' | xargs lua-format -i " ..
         filesToFormat,
     ["format-check"] = "find . -wholename '**/*.lua' | xargs lua-format --check " ..
         filesToFormat,
-    ci = { children = { "format-check", "test", "lint" } }
+    ci = { children = { "format-check", "lint", "check-coverage-percentage" } }
 }
 
 local statusCodes = {}
