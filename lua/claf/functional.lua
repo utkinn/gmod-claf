@@ -151,7 +151,7 @@ function mod.Flatten(source)
     return flattened
 end
 
-function mod.Zip(tables) -- TODO: Support for different lenghts
+function mod.Zip(tables)
     if #tables == 1 then
         return tables[1]
     end
