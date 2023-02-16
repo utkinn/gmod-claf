@@ -2,7 +2,9 @@
 local mod = {}
 
 -- Free ID for automatic hook name.
-local CLAF_hookAutoNameID = 1
+if _CLAF_hookAutoNameID == nil then
+    _CLAF_hookAutoNameID = 1
+end
 
 -- Always creates an error 'not implemented'.
 function mod.TODO(reason)
@@ -23,8 +25,8 @@ end
 -- Quick hook creation function.
 function mod.Hook(event, callback, ID)
     if ID == nil then
-        ID = "CLAFHook_" .. CLAF_hookAutoNameID
-        CLAF_hookAutoNameID = CLAF_hookAutoNameID + 1
+        ID = "CLAFHook_" .. _CLAF_hookAutoNameID
+        _CLAF_hookAutoNameID = _CLAF_hookAutoNameID + 1
     end
 
     hook.Add(event, ID, callback)

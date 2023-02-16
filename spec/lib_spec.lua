@@ -3,8 +3,7 @@ require("spec/gmod_polyfills")
 _G.net = {}
 _G.hook = {}
 
-local match = require("luassert.match")
-local _ = match._
+local _ = require("luassert.match")._
 local lib = require("claf.lib")
 
 describe("TODO", function()
@@ -34,28 +33,48 @@ describe("ErrorIfNil", function()
 end)
 
 describe("Hook", function()
-    it("calls hook.Add with generated unique identifier", function()
-        stub(hook, "Add")
+    insulate('', function()
+        it("calls hook.Add with generated unique identifier", function()
+            stub(hook, "Add")
 
-        lib.Hook("event1", function()
-        end)
-        lib.Hook("event2", function()
-        end)
+            lib.Hook("event1", function()
+            end)
+            lib.Hook("event2", function()
+            end)
 
-        assert.stub(hook.Add).was.called_with("event1", "CLAFHook_1", _)
-        assert.stub(hook.Add).was.called_with("event2", "CLAFHook_2", _)
+            assert.stub(hook.Add).was.called_with("event1", "CLAFHook_1", _)
+            assert.stub(hook.Add).was.called_with("event2", "CLAFHook_2", _)
+        end)
     end)
 
-    it("calls hook.Add with specified identifier", function()
-        stub(hook, "Add")
+    insulate('', function()
+        it("calls hook.Add with specified identifier", function()
+            stub(hook, "Add")
 
-        lib.Hook("event1", function()
-        end, "id1")
-        lib.Hook("event2", function()
-        end, "id2")
+            lib.Hook("event1", function()
+            end, "id1")
+            lib.Hook("event2", function()
+            end, "id2")
 
-        assert.stub(hook.Add).was.called_with("event1", "id1", _)
-        assert.stub(hook.Add).was.called_with("event2", "id2", _)
+            assert.stub(hook.Add).was.called_with("event1", "id1", _)
+            assert.stub(hook.Add).was.called_with("event2", "id2", _)
+        end)
+    end)
+
+    insulate('', function()
+        it('remembers last auto generated hook ID between includes', function()
+            stub(hook, "Add")
+
+            table.Merge(_G, include 'claf/lib.lua')
+            Hook("event1", function()
+            end)
+            table.Merge(_G, include 'claf/lib.lua')
+            Hook("event1", function()
+            end)
+
+            assert.stub(hook.Add).was.called_with('event1', 'CLAFHook_1', _)
+            assert.stub(hook.Add).was.called_with('event1', 'CLAFHook_2', _)
+        end)
     end)
 end)
 
