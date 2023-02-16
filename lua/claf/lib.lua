@@ -1,3 +1,4 @@
+-- luacheck: globals _CLAF_hookAutoNameID
 -- Some utility functions.
 local mod = {}
 
