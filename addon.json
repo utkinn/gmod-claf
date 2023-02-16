@@ -14,6 +14,9 @@
       ".busted",
       ".luacheckrc",
       "maint.lua",
-      "claf-1.0.0-1.rockspec"
+      "claf-1.0.0-1.rockspec",
+      ".lua-format",
+      ".luacov.default",
+      "tools/*"
   ]
 }
