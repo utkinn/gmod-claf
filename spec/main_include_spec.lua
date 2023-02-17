@@ -41,14 +41,17 @@ describe("claf.lua", function()
         end
         _G.net = {}
         local includeSpy = spy.on(_G, "include")
+        stub(_G, "AddCSLuaFile")
 
         include "claf.lua"
 
         assert.is_function(_G.All)
+        assert.stub(_G.AddCSLuaFile).was.called()
 
         local clafModules = listDir("lua/claf")
         for _, mod in ipairs(clafModules) do
             assert.spy(includeSpy).was.called_with("claf/" .. mod)
+            assert.stub(_G.AddCSLuaFile).was.called_with("claf/" .. mod)
         end
     end)
 end)

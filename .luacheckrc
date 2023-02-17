@@ -17,7 +17,8 @@ stds.gmod = {
         "hook",
         "SERVER",
         "CLIENT",
-        "ErrorIfNil"
+        "ErrorIfNil",
+        "AddCSLuaFile"
     }
 }
 
