@@ -188,16 +188,16 @@ function mod.Try(try, catch, finally)
 end
 
 -- TODO: Keys
-function mod.Max(source)
+function mod.Min(source, sorter)
     local sorted = table.Copy(source)
-    table.sort(sorted)
-    return sorted[#sorted]
+    table.sort(sorted, sorter)
+    return sorted[1]
 end
 
-function mod.Min(source)
+function mod.Max(source, sorter)
     local sorted = table.Copy(source)
-    table.sort(sorted)
-    return sorted[1]
+    table.sort(sorted, sorter)
+    return sorted[#sorted]
 end
 
 function mod.Take(source, n)
