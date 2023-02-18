@@ -286,6 +286,21 @@ function mod.Last(source)
     return source[#source]
 end
 
+function mod.FindIndex(source, predicate)
+    if not isfunction(predicate) then
+        local target = predicate
+        predicate = function(x)
+            return x == target
+        end
+    end
+
+    for i, v in ipairs(source) do
+        if predicate(v) then
+            return i
+        end
+    end
+end
+
 function mod.Sorted(source, sorter)
     local sorted = table.Copy(source)
     table.sort(sorted, sorter)
